@@ -1,6 +1,11 @@
 \documentclass[12pt,draftproposal]{msca-pf}
 % {{{ packages
 
+\usepackage[left=15mm,right=15mm,bottom=20mm,top=20mm]{geometry}
+\usepackage{mathtools}
+\usepackage{graphicx}
+\usepackage{mathpartir}
+
 % better environments
 \usepackage[nameinlink, noabbrev]{cleveref}
 \usepackage[shortlabels]{enumitem}
@@ -17,6 +22,9 @@
             shrink=10]{microtype}
 \SetTracking{encoding={*}, shape=sc}{40}
 
+% bibliography
+\usepackage[style=mla,backend=biber]{biblatex}
+
 % }}}
 
 % {{{ formatting
@@ -31,17 +39,52 @@
 % add your own fancy commands
 % \NewDocumentCommand \mycmd { m } {\textbf{#1}}
 
+\graphicspath{{./graphics}} % Paths whereimages are looked for
+\newcommand{\includepdf}[2]{\vcenter{\hbox{\includegraphics[width=#1]{#2.pdf}}}}
+
+\newcommand{\fullwidthbox}[1]{%
+    \noindent\makebox[\textwidth]{%
+        \fbox{%
+            \begin{minipage}{\dimexpr\textwidth-2\fboxsep-2\fboxrule\relax}
+                \centering
+                #1
+            \end{minipage}%
+        }%
+    }%
+}
+
+\newcommand{\proj}{\small\textsc{ScrollNets}}
+\newcommand{\WP}[1]{$\mathsf{WP#1}$}
+\newcommand{\xstep}[1]{\xrightarrow{#1}}
+
 % }}}
 
 % {{{ title
 
 \title{Part B-1}
-\author{}
-\date{}
+\author{Pablo Donato}
+\date{\today}
 
 % NOTE: update these as necessary
-% \mscaidentifier{HORIZON-MSCA-2025-PF-01}
-% \mscaproject{TDB}
+\mscaidentifier{HORIZON-MSCA-2025-PF-01}
+\mscaproject{\textsc{ScrollNets}}
+
+% }}}
+
+% {{{ bibliography
+
+% \usepackage{filecontents}% to embed the file `myreferences.bib` in your `.tex` file
+
+% \begin{filecontents}{myreferences.bib}
+% @online{foo12,
+%   year = {2012},
+%   title = {footnote-reference-using-european-system},
+%   url = {http://tex.stackexchange.com/questions/69716/footnote-reference-using-european-system},
+% }
+% \end{filecontents}
+
+% \addbibresource{MSCA.bib}
+\bibliography{MSCA.bib}
 
 % }}}
 
@@ -49,12 +92,12 @@
 
 \maketitle
 
-\textit{The text in each section is provided only as guidance and should be deleted
-in the final application (including this text). The tags in the section titles
-and at the end of certain sections should be \textbf{kept as is}. They are used for
-automatic document processing and are highly recommended by the programme.}
+% \textit{The text in each section is provided only as guidance and should be deleted
+% in the final application (including this text). The tags in the section titles
+% and at the end of certain sections should be \textbf{kept as is}. They are used for
+% automatic document processing and are highly recommended by the programme.}
 
-\textit{When in doubt, always consult the official template and programme guide!}
+% \textit{When in doubt, always consult the official template and programme guide!}
 
 \section{Excellence \mscatag{REL-EVA-RE}}
 \label{sc:excellence}
@@ -63,15 +106,240 @@ automatic document processing and are highly recommended by the programme.}
     (and the extent to which they are ambitious, and go beyond the state of the art)}
 \label{ssc:excellence:quality}
 
-At a minimum, address the following aspects:
-
+\textbf{Proof assistants} --- also called \emph{interactive theorem provers} (ITPs) --- are software
+tools used to rigorously verify formal modelling and reasoning. Contemporary systems such as
+\emph{Rocq}, \emph{Lean}, and
+\emph{Isabelle}\footcite{the_rocq_development_team_2025_15149629,10.1007/978-3-030-79876-5_37,nipkow2002isabelle}
+offer powerful frameworks for constructing formal specifications and proofs: they have been used
+successfully in various applications, ranging from the verification of advanced theorems in
+mathematics to the certification of complex software artifacts such as programming language
+compilers, operating system kernels and cryptographic
+protocols\footcite{gonthierFormalProofFour2008,leroyFormalVerificationRealistic2009,kleinSeL4FormalVerification2009,Barthe2014}.
+Yet they remain notoriously difficult to learn and use, limiting broader adoption in various
+settings where they could bring transformative societal impact, such as:
 \begin{itemize}
-    \item Describe the quality and pertinence of the R\&I objectives; are the
-    objectives measurable and verifiable? Are they realistically achievable?
-
-    \item Describe how your project goes beyond the state-of-the-art, and the
-    extent to which the proposed work is ambitious.
+    \item \textbf{mathematics education}, where they could act as a unifying medium for interactive
+    exploration and understanding of mathematical concepts, fostering closer collaboration amongst
+    students and offloading some teaching burden (e.g. grading) through
+    automation\footcite{minhResearchReportProof2024};
+    \item \textbf{formal verification}, where they could bring higher standards of quality assurance
+    (QA) to businesses that rely on complex hardware and software systems, especially in
+    safety-critical industries such as healthcare, transportation and energy;
+    \item \textbf{artificial intelligence} (AI), where the uncertainty inherent to current
+    technologies based on probabilistic techniques such as large language models (LLMs) could be
+    mitigated by the exact logical reasoning capabilities of ITPs, an approach sometimes termed
+    \emph{neurosymbolic AI}.
 \end{itemize}
+In view of this large potential for applications, it is natural to ask what exactly limits adoption
+of the current generation of ITPs. The recent surge of interest arising both in academia and
+industry --- in great part due to the popularity of the Lean language and its Mathlib library ---
+suggests that social factors such as public communication, community building, and vast amounts of
+expository content and learning resources all play an important role in the widespread appropriation
+of this complex technology. Even more recently, the promise of a new kind of generative AI free from
+so-called ``hallucinations'' that could aid in accelerating scientific discoveries has been a
+powerful narrative attracting much attention and funding\footcite{metzMathPathChatbots2024}.
+
+However, many researchers in the field agree that current ITPs suffer from more \emph{foundational}
+issues that affect directly their accessibility and ease of use, as well as their ability to scale
+to larger developments. While these issues are quite diverse in nature, a recurring theme since the
+birth of the technology in the 60s is the overwhelming \textbf{bureaucracy} involved in
+formalization efforts: formal proofs require a level of care and detail that is far superior and
+much more time consuming than what is expected from informal paper proofs. This has been measured by
+the so-called \emph{DeBruijn factor} comparing the size of formal and informal proofs, often
+reaching a value of 4 on average\footcite{debruijn_factor}.
+
+The main approach to tame this complexity has been to \emph{automate} the various processes involved
+in formalization, which fall roughly within two categories: \emph{elaboration}, concerned with the
+translation of requirements expressed in natural language or mathematical notations into precise
+logical specifications; and \emph{synthesis}, where the system attempts to automatically generate
+(parts of) proofs and programs meeting these specifications. Progress on both fronts is currently
+being made with the help of state-of-the-art machine learning techniques, including
+LLMs\footcite{blaauwbroekLearningGuidedAutomated2024}. More theoretical research has also been
+pursued in \textbf{type theory}, the field studying the logical formalisms at the foundation of all
+modern ITPs. They are the ultimate backbone on which relies our \emph{trust} in the output of these
+systems, and thus a key differentiator with respect to purely probabilistic approaches to
+(generative) AI.
+% In particular, the influential program of \emph{homotopy type theory} kickstarted by Fields medalist
+% Vladimir Voevodsky has exhibited new ways to understand and mechanize the concept of
+% \emph{equality}, which is known as an important weakness of traditional type theories.
+% Type-theoretical foundations are the ultimate backbone on which relies our \emph{trust} in the
+% output of ITPs, and thus a key differentiator with respect to purely probabilistic approaches to
+% (generative) AI.
+
+However, little attention has been devoted by the ITP community to another discipline closely
+related to type theory: \textbf{proof theory}. In particular, \emph{structural} proof theory is its
+branch concerned with the study of combinatorial structures for representing and manipulating
+proofs. One can identify mainly three motivations for this study:
+\begin{itemize}
+    \item \textbf{Challenge 1} (C1) is the fundamental problem of \textbf{proof identity}, also
+    known as Hilbert's 24\textsuperscript{th} problem\footcite{strasburger-problem-2019}. It aims to
+    answer the philosophical question ``what is a proof?'', and the mathematical question ``when are
+    two proofs equal?''. It is thus intimately related to \emph{homotopy type theory} which also
+    investigates the structure of \emph{equality}, a known weakness of many type theories.
+
+    \item \textbf{Challenge 2} (C2) is to find proof systems for \textbf{non-standard logics} ---
+    such as \emph{modal}, \emph{intermediate}, \emph{substructural} and \emph{fixpoint} logics ---
+    satisfying good enough properties as to render an algorithmic treatment of these logics
+    tractable. The most important property in this respect is that of \textbf{cut elimination},
+    which is essential both to reduce the complexity of \emph{proof search} (proof \emph{synthesis}
+    in ITP terminology), and to ensure productivity of \emph{program execution} through the
+    \textbf{Curry-Howard correspondence} (CHC) between proofs and programs. The CHC is also at the
+    heart of the \emph{calculus of inductive constructions} (CoIC), which is the type theory used by
+    the two leading proof assistants Rocq and Lean. Researchers are increasingly interested in
+    type-theoretic formulations of these logics as they provide expressive languages for specifying
+    behaviors of programs that go beyond pure functions, including effects (modal logics),
+    resource-sensitivity (modal and substructural logics) and recursion (modal and fixpoint
+    logics)\footcite{tangModalEffectTypes2025,marshallLinearityUniquenessEntente2022,cloustonGuardedLambdaCalculusProgramming2017}.
+    
+    \item \textbf{Challenge 3} (C3) is to improve the \textbf{efficiency} of computational
+    procedures on proofs, but also on programs through the CHC. A well-established principle in
+    computer science and software engineering is that choosing appropriate data structures for a
+    problem can lead to orders-of-magnitude improvements in efficiency. Finding the right data
+    structures for such general classes of objects as proofs and programs is thus a very enticing
+    goal with wide implications, including faster automation in ITPs.
+\end{itemize}
+
+In the past decades, two families of proof formalisms have emerged to tackle these challenges:
+\begin{itemize}
+    \item \textbf{Graphical proof systems} represent proof objects as \emph{graphs} instead of
+    \emph{trees} of inference rules.
+    % Many programming systems incorporate graph representations of programs in their compilation
+    % pipeline in order to optimize the flow of computation, including popular machine learning
+    % frameworks based on neural networks such as TensorFlow and PyTorch. Indeed, graphs appear
+    % naturally when one wants to abstract from the order in which operations are sequenced, to
+    % leverage \emph{parallelism} or to maximize \emph{sharing} of computations.
+    \emph{Proof nets}\footcite{girard-linear-1987} are one of the first graphical proof formalisms,
+    meant to reduce the bureauceacy of proofs in linear logic (C2) in order to identify their
+    essence (C1). Further developments stemming from proof nets like the \emph{geometry of
+    interaction} and \emph{interaction nets} have found applications in program optimization for
+    hardware synthesis and parallelized
+    execution\footcite{ghicaGeometrySynthesisStructured2007,mackieInteractionNetImplementation2011}
+    (C3). The \emph{combinatorial proofs} of Hughes are direct decendants of proof nets mainly
+    concerned with C1\footcite{Hughes_2006}, and \emph{string diagrams} from category theory have
+    been applied to logic and programming languages, with well-known connections to proof
+    nets\footcite{piedeleuIntroductionStringDiagrams2025}.
+
+    \item \textbf{Deep inference} generalizes Gentzen-style proof systems by allowing inference
+    rules to be applied at any depth inside of a formula, rather than being restricted to its
+    top-level logical connective. The terminology of ``deep inference'' was proposed by Alessio
+    Guglielmi, who invented the \emph{calculus of structures} to overcome the inability of sequent
+    calculus to capture the substructural logic $\mathsf{MV}$\footcite{Guglielmi1999ACO}. Since
+    then, calculi of structures and so-called \emph{nested sequent calculi} have been introduced to
+    give proof systems enjoying cut-elimination to most substructural, modal and intermediate
+    logics\footcite{kuznets_maehara-style_2019,postniece_proof_2010} (C2). Deep inference has also
+    been used in the study of proof complexity, providing in some cases exponential speedup over
+    sequent calculus with respect to proof size, as well as quasipolynomial-time
+    cut-elimination\footcite{dasRelativeProofComplexity2015a,bruscoliQuasipolynomialNormalisationDeep2016a}
+    (C3). Lastly, many deep inference formalisms enjoy CHC-style interpretations with variants of
+    $\lambda$-calculus, which also improve space
+    efficiency\footcite{guenot_nested_2013,gundersenAtomicLambdaCalculus2013}.
+\end{itemize}
+
+The experienced researcher (ER) has accumulated significant knowledge of graphical and deep
+inference proof systems, as well as their applications to ITPs. This expertise was developed during
+his PhD thesis\footcite{donatoDeepInferenceGraphical2024} titled ``Deep Inference for Graphical
+Theorem Proving'', where he designed various proof formalisms that enable a novel approach to
+interactive theorem proving based on \textbf{direct manipulation} of logical statements in a
+graphical user interface (GUI). This extends earlier works on \emph{Proof-by-Pointing}\footcite{PbP}
+and \emph{Proof-by-Linking}\footcite{Chaudhuri2013} where proofs are constructed through
+\emph{click} and \emph{drag-and-drop} gestures on formulas, to a more encompassing paradigm termed
+\emph{Proof-by-Action} (PbA). The goal is to improve accessibility and usability of ITPs by focusing
+on better principles for \emph{human interaction}, complementing more mainstream research around
+machine automation. Applying a mixture of graphical and deep inference proof theory to that effect
+is a highly original endeavor, with no similar efforts in the contemporary research landscape.
+
+\begin{figure}
+  \captionsetup[subfigure]{justification=centering}
+  \centering
+  \begin{subfigure}[b]{0.64\textwidth}
+    \begin{mathpar}
+      \includepdf{2cm}{modusponens1}
+      ~~~\xstep{\mathsf{Deit}}~~~
+      \includepdf{2cm}{modusponens2}
+      ~~~\xstep{\mathsf{Close}}~~~
+      \includepdf{1.25cm}{modusponens3}
+      ~~~\xstep{\mathsf{Del}}~~~
+      \includepdf{0.25cm}{modusponens4}
+    \end{mathpar}
+    \caption{Dynamic rewriting from premiss $a \wedge (a \Rightarrow b)$ to conclusion $b$}
+    \label{fig:modus-ponens-dynamic}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.35\textwidth}
+    \centering
+    $\includepdf{2.25cm}{modusponens-scrollnet}$
+    \caption{Static representation of rules as arrows in a bigraph}
+    \label{fig:modus-ponens-static}
+  \end{subfigure}
+  \caption{Proof of \textit{modus ponens} $a \wedge (a \Rightarrow b) \vdash b$ in scroll nets}
+  \label{fig:modus-ponens}
+\end{figure}
+
+In continuation of this programme, the ER has introduced in his last
+preprint\footcite{donatoScrollNets2025} a new graphical framework called \textbf{scroll nets}. It is
+based on a long forgotten diagrammatic proof system called \emph{existential graphs} (EGs), invented
+by the famous philosopher and logician Charles Sanders Peirce at the dusk of the
+19\textsuperscript{th} century --- thus predating the very existence of proof theory and computer
+science. Proofs in EGs are defined by a small set of inference rules that \emph{dynamically} rewrite
+diagrams in contexts of arbitrary depth (Figure~\ref{fig:modus-ponens-dynamic}), thus combining
+features of both deep inference and string diagrams\footcite{bonchi_diagrammatic_2024}. Scroll nets
+provide a \emph{static} way to represent proofs in EGs by recording explicitly applications of
+inference rules in a \emph{directed graph} (Figure~\ref{fig:modus-ponens-static}), similarly to
+proof nets and combinatorial proofs. Crucially, this graph shares the same nodes as the
+(tree-shaped) statements involved in the proof, making scroll nets a more compact representation
+than other graphical proof structures, but also surprisingly a variant of the notion of
+\emph{bigraph}. Bigraphs were introduced by Milner as a foundational combinatorial structure
+encompassing most models of concurrent/parallel computation, including Petri nets and his own CCS
+and $\pi$-calculus\footcite{milnerBigraphicalReactiveSystems2001}. In his preprint, the ER shows how
+scroll nets naturally subsume the simply-typed $\lambda$-calculus --- the common kernel of all type
+theories used in ITPs --- by identifying a generalization of the notion of \emph{detour} from
+natural deduction that abstracts away the shape of formulas.
+
+All these discoveries hint toward the potential of scroll nets as a very expressive framework for
+both proof theory and type theory, unifying features found in most of the formalisms that have
+emerged from the two disciplines in a natural and efficient way. Moreover, the ER's vision is to
+exploit the diagrammatic nature of scroll nets to redesign not only the \emph{backend} but also the
+\emph{frontend} of ITPs, making them the \emph{interaction
+substrate}\footcite{mackayInteractionSubstratesCombining2025} of a new kind of GUI in the PbA
+paradigm.
+
+Given the early stage of the theory of scroll nets and the expertise of the Theory of Computation
+group at Birmingham hosting the ER, the {\proj} project will progress towards this vision by
+focusing on the following key objectives:
+
+% One goal is to make automation (in particular synthesis) easier to understand
+% for humans, so as to tighten the interaction loop and thus enhance the collaboration between the
+% user and the system. Having more readable inputs and outputs is also crucial to enable \emph(audits)
+% of formal developments by external authorities, for instance in the certification of safety-critical
+% software by governmental agencies.
+
+\setlength{\fboxsep}{5pt}
+\fullwidthbox{
+    \begin{enumerate}
+        \item[(K1)] extend the theory of scroll nets to account for \textbf{richer logics}, beyond minimal
+        implicative logic;
+        \item[(K2)] find natural and efficient \textbf{translations} of state-of-the-art proof
+        systems and typed programming models into scroll nets.
+    \end{enumerate}
+}
+
+This should support the following very ambitious long-term goal of the project:
+
+\setlength{\fboxsep}{5pt}
+\fullwidthbox{\textit{ 
+    Establish \textbf{scroll nets} as the foundation for a new generation of ITPs
+    that support \textbf{interactive refinement} of formal specifications, proofs and programs through
+    \textbf{diagrammatic manipulations}.
+}}
+
+% At a minimum, address the following aspects:
+
+% \begin{itemize}
+%     \item Describe the quality and pertinence of the R\&I objectives; are the
+%     objectives measurable and verifiable? Are they realistically achievable?
+
+%     \item Describe how your project goes beyond the state-of-the-art, and the
+%     extent to which the proposed work is ambitious.
+% \end{itemize}
 
 \subsection{Soundness of the proposed methodology
     (including interdisciplinary approaches, consideration of the gender
@@ -79,78 +347,100 @@ At a minimum, address the following aspects:
     and the quality of open science practices)}
 \label{ssc:excellence:methodology}
 
-At a minimum, address the following aspects:
+
 
 \begin{itemize}
-    \item \emph{Overall methodology}: Describe and explain the overall methodology,
-    including the concepts, models and assumptions that underpin your work.
-    Explain how this will enable you to deliver your project’s objectives. Refer
-    to any important challenges you may have identified in the chosen methodology
-    and how you intend to overcome them.
-
-    \item \emph{Integration of methods and disciplines to pursue the objectives}:
-    Explain how expertise and methods from different disciplines will be brought
-    together and integrated in pursuit of your objectives. If you consider that
-    an inter-disciplinary\footnotemark{} approach is unnecessary in the
-    context of the proposed work, please provide a justification.
-
-    \footnotetext{\emph{Interdisciplinarity} means the integration of information,
-    data, techniques, tools, perspectives, concepts or theories from two or
-    more scientific disciplines.}
-
-    \item \emph{Gender dimension and other diversity aspects}: Describe how the
-    gender dimension and other diversity aspects are taken into account in the
-    project's research and innovation content. If you do not consider such a
-    gender dimension to be relevant in your project, please provide a
-    justification.
-    \begin{itemize}
-        \item Remember that that this question relates to the \emph{content} of the
-        planned research and innovation activities, and not to gender balance
-        in the teams in charge of carrying out the project.
-
-        \item  Sex, gender and diversity analysis refers to biological
-        characteristics and social/cultural factors respectively. For guidance on
-        methods of sex / gender analysis and the issues to be taken into account,
-        please refer to this
-        \href{https://op.europa.eu/en/publication-detail/-/publication/33b4c99f-2e66-11eb-b27b-01aa75ed71a1/language-en}{link}.
-    \end{itemize}
-
-    \item \emph{Open science practices}: Describe how appropriate open science
-    practices are implemented as an integral part of the proposed methodology.
-    Show how the choice of practices and their implementation is adapted to the
-    nature of your work in a way that will increase the chances of the project
-    delivering on its objectives \emph{[1/2 page]}. If you believe that none of
-    these practices are appropriate for your project, please provide a justification
-    here.
-
-    \emph{Open science is an approach based on open cooperative work and systematic
-    sharing of knowledge and tools as early and widely as possible in the process.
-    Open science practices include early and open sharing of research (for example
-    through pre-registration, registered reports, pre-prints, or crowd-sourcing);
-    research output management; measures to ensure reproducibility of research
-    outputs; providing open access to research outputs (such as publications,
-    data, software, models, algorithms, and workflows); participation in open
-    peer-review; and involving all relevant knowledge actors including citizens,
-    civil society and end users in the co-creation of R\&I agendas and contents
-    (such as citizen science).}
-
-    \emph{Please note that this does not refer to outreach actions that may be
-    planned as part of the communication, dissemination and exploitation activities.
-    These aspects should instead be described below under ``Impact''.}
-
-    \item Proposals selected for funding under Horizon Europe will need to develop
-    a detailed data management plan (DMP) for making their data/research outputs
-    findable, accessible, interoperable and reusable (FAIR) as a deliverable by
-    month 6 and revised towards the end of a project's lifetime. The DMP should
-    describe how research outputs (especially research data) generated and/or
-    collected during the project will be managed so as to ensure that they are
-    findable, accessible, interoperable and reusable.
-
-    \emph{For guidance on open science practices and research data management,
-    please refer to the relevant section of the
-    \href{https://ec.europa.eu/info/funding-tenders/opportunities/docs/2021-2027/horizon/temp-form/af/af_he-msca-pf_en.pdf}{HE Programme Guide}
-    on the Funding \& Tenders Portal.}
+    \item \WP{1} Study of sequentialization and normalization in implicative scroll nets
+    \item \WP{2} Horizontal and vertical generalization to account for disjunction/sum types, bi-intuitionistic and classical logic
+    \item The Functional Machine Calculus (FMC) and Relational Machine Calculus (RMC) are two
+    foundational models of computation introduced very recently by W. Heijltjes, also co-inventor of
+    intuitionistic combinatorial
+    proofs\footcite{heijltjesFunctionalMachineCalculus2023,barrettRelationalMachineCalculus2024,heijltjes_intuitionistic_2019}.
+    They achieve respectively a unification of the two main paradigms of declarative programming,
+    \emph{functional} and \emph{logic} programming, with the more mainstream paradigm of
+    \emph{imperative} programming. An open problem is to find a suitable combination of the FMC and
+    RMC that could subsume all three paradigms. \WP{3} will explore the potential of scroll nets as
+    a solution in the well-typed fragment, by devising translations of the FMC and RMC that preserve
+    both its denotational and operational semantics. This will build on \WP{1} for the operational
+    semantics given by detour elimination, and \WP{2} to account for non-determinism with
+    $(n,1)$-ary scrolls for sum and empty types.
+    \item \WP{4} Recursive generalization to account for (co)inductive types (cyclic proofs)
+    % \item \WP{3} Vertical generalization to account for classical and intermediate logics
+    \item \WP{5} Study of \textsf{Beta} and \textsf{Gamma} to account for modal logic, higher-order logic and dependent types
 \end{itemize}
+
+% At a minimum, address the following aspects:
+
+% \begin{itemize}
+%     \item \emph{Overall methodology}: Describe and explain the overall methodology,
+%     including the concepts, models and assumptions that underpin your work.
+%     Explain how this will enable you to deliver your project’s objectives. Refer
+%     to any important challenges you may have identified in the chosen methodology
+%     and how you intend to overcome them.
+
+%     \item \emph{Integration of methods and disciplines to pursue the objectives}:
+%     Explain how expertise and methods from different disciplines will be brought
+%     together and integrated in pursuit of your objectives. If you consider that
+%     an inter-disciplinary\footnotemark{} approach is unnecessary in the
+%     context of the proposed work, please provide a justification.
+
+%     \footnotetext{\emph{Interdisciplinarity} means the integration of information,
+%     data, techniques, tools, perspectives, concepts or theories from two or
+%     more scientific disciplines.}
+
+%     \item \emph{Gender dimension and other diversity aspects}: Describe how the
+%     gender dimension and other diversity aspects are taken into account in the
+%     project's research and innovation content. If you do not consider such a
+%     gender dimension to be relevant in your project, please provide a
+%     justification.
+%     \begin{itemize}
+%         \item Remember that that this question relates to the \emph{content} of the
+%         planned research and innovation activities, and not to gender balance
+%         in the teams in charge of carrying out the project.
+
+%         \item  Sex, gender and diversity analysis refers to biological
+%         characteristics and social/cultural factors respectively. For guidance on
+%         methods of sex / gender analysis and the issues to be taken into account,
+%         please refer to this
+%         \href{https://op.europa.eu/en/publication-detail/-/publication/33b4c99f-2e66-11eb-b27b-01aa75ed71a1/language-en}{link}.
+%     \end{itemize}
+
+%     \item \emph{Open science practices}: Describe how appropriate open science
+%     practices are implemented as an integral part of the proposed methodology.
+%     Show how the choice of practices and their implementation is adapted to the
+%     nature of your work in a way that will increase the chances of the project
+%     delivering on its objectives \emph{[1/2 page]}. If you believe that none of
+%     these practices are appropriate for your project, please provide a justification
+%     here.
+
+%     \emph{Open science is an approach based on open cooperative work and systematic
+%     sharing of knowledge and tools as early and widely as possible in the process.
+%     Open science practices include early and open sharing of research (for example
+%     through pre-registration, registered reports, pre-prints, or crowd-sourcing);
+%     research output management; measures to ensure reproducibility of research
+%     outputs; providing open access to research outputs (such as publications,
+%     data, software, models, algorithms, and workflows); participation in open
+%     peer-review; and involving all relevant knowledge actors including citizens,
+%     civil society and end users in the co-creation of R\&I agendas and contents
+%     (such as citizen science).}
+
+%     \emph{Please note that this does not refer to outreach actions that may be
+%     planned as part of the communication, dissemination and exploitation activities.
+%     These aspects should instead be described below under ``Impact''.}
+
+%     \item Proposals selected for funding under Horizon Europe will need to develop
+%     a detailed data management plan (DMP) for making their data/research outputs
+%     findable, accessible, interoperable and reusable (FAIR) as a deliverable by
+%     month 6 and revised towards the end of a project's lifetime. The DMP should
+%     describe how research outputs (especially research data) generated and/or
+%     collected during the project will be managed so as to ensure that they are
+%     findable, accessible, interoperable and reusable.
+
+%     \emph{For guidance on open science practices and research data management,
+%     please refer to the relevant section of the
+%     \href{https://ec.europa.eu/info/funding-tenders/opportunities/docs/2021-2027/horizon/temp-form/af/af_he-msca-pf_en.pdf}{HE Programme Guide}
+%     on the Funding \& Tenders Portal.}
+% \end{itemize}
 
 \subsection{Quality of the supervision, training and of the two-way transfer of
     knowledge between the researcher and the host}

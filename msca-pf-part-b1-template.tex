@@ -5,6 +5,7 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{mathtools}
+\usepackage{prftree}
 \usepackage{graphicx}
 \usepackage{mathpartir}
 
@@ -59,6 +60,7 @@
 \newcommand{\CH}[1]{$\mathsf{C#1}$}
 \newcommand{\KO}[1]{$\mathsf{KO#1}$}
 \newcommand{\WP}[1]{$\mathsf{WP#1}$}
+\newcommand{\TO}[1]{$\mathsf{TO#1}$}
 \newcommand{\xstep}[1]{\xrightarrow{#1}}
 
 % }}}
@@ -128,7 +130,7 @@ settings where they could bring transformative societal impact, such as:
     \item \textbf{formal verification}, where they could bring higher standards of quality assurance
     (QA) to businesses that rely on complex hardware and software systems, especially in
     safety-critical industries such as healthcare, transportation and energy;
-    \item \textbf{artificial intelligence} (AI), where the uncertainty inherent to current
+    \item \textbf{artificial intelligence (AI) safety}, where the uncertainty inherent to current
     technologies based on probabilistic techniques such as large language models (LLMs) could be
     mitigated by the exact logical reasoning capabilities of ITPs, an approach sometimes termed
     \emph{neurosymbolic AI}.
@@ -286,10 +288,10 @@ based on a long forgotten diagrammatic proof system called \emph{existential gra
 by the famous philosopher and logician Charles Sanders Peirce at the dusk of the
 19\textsuperscript{th} century --- thus predating the very existence of proof theory and computer
 science. Proofs in EGs are defined by a small set of inference rules that \emph{dynamically} rewrite
-diagrams in contexts of arbitrary depth (Figure~\ref{fig:modus-ponens-dynamic}), thus combining
+diagrams in contexts of arbitrary depth (Fig.~\ref{fig:modus-ponens-dynamic}), thus combining
 features of both deep inference and string diagrams\footcite{bonchi_diagrammatic_2024}. Scroll nets
 provide a \emph{static} way to represent proofs in EGs by recording explicitly applications of
-inference rules in a \emph{directed graph} (Figure~\ref{fig:modus-ponens-static}), combining the
+inference rules in a \emph{directed graph} (Fig.~\ref{fig:modus-ponens-static}), combining the
 type-theoretic methodology of internalizing inference rules inside judgments with a graphical
 structure similar to proof nets and combinatorial proofs. Crucially, this graph shares the same
 nodes as the (tree-shaped) statements involved in the proof, making scroll nets a more compact
@@ -307,7 +309,15 @@ emerged from the two disciplines in a natural and efficient way. Moreover, the E
 exploit the diagrammatic nature of scroll nets to redesign not only the \emph{backend} but also the
 \emph{frontend} of ITPs, making them the \emph{interaction
 substrate}\footcite{mackayInteractionSubstratesCombining2025} of a new kind of GUI in the PbA
-paradigm.
+paradigm. Indeed, what crucially distinguishes scroll nets from other deep inference or graphical
+proof formalisms is their suitability for \emph{interactive manipulation}: every inference rule
+possesses a natural spatial interpretation as a \emph{gesture} on a logical statement, either
+inserting/erasing a statement at a designated location through \emph{pointing} (looping arrows in
+Fig.~\ref{fig:modus-ponens-static}), or (un)copying to/from some location through
+\emph{drag-and-drop} (non-looping arrows in Fig.~\ref{fig:modus-ponens-static}). This natural
+semantics of gestures as a means of manipulating located objects is very familiar to users of modern
+GUIs in virtually every domain, and could lead to a \textbf{groundbreaking ``no-code'' approach to
+interactive theorem proving} that is much more intuitive than current textual interfaces.
 
 Given the early stage of the theory of scroll nets and the expertise of the Theory of Computation
 group at Birmingham hosting the ER, the {\proj} project will progress towards this vision by
@@ -351,26 +361,7 @@ This should support the following very ambitious long-term goal of the project:
 \subsection{Soundness of the proposed methodology}
 \label{ssc:excellence:methodology}
 
-\begin{figure}
-  \captionsetup[subfigure]{justification=centering}
-  \centering
-  \begin{subfigure}[b]{0.55\textwidth}
-    \caption{Simulation of left intro rule for intuitionistic subtraction}
-    \label{fig:subtraction}
-  \end{subfigure}
-  \begin{subfigure}[b]{0.44\textwidth}
-    \caption{Proof in predicate modal logic of $\forall x. \square (a(x) \land b(x)) \vdash (\forall x. \square a(x)) \land (\forall x. \square b(x))$}
-    \label{fig:modal}
-  \end{subfigure}
-  \begin{subfigure}[b]{\textwidth}
-    \caption{Encoding of natural numbers and factorial function with smallest fixpoints of propositions}
-    \label{fig:factorial}
-  \end{subfigure}
-  \caption{Extensions of scroll nets to richer logics (\WP{2} -- \WP{4})}
-  \label{fig:extensions}
-\end{figure}
-
-The research objectives of {\proj} are organized into five technical work packages, detailed below.
+The research objectives of {\proj} are organised into five technical work packages, detailed below.
 The core theory will be developed in \WP{1} and then extended to richer logics in \WP{2}, \WP{3} and
 \WP{4}, meeting \KO{1}. This will culminate in \WP{5} with the study of translations from
 state-of-the-art models of computation, achieving \KO{2}.
@@ -409,21 +400,46 @@ state-of-the-art models of computation, achieving \KO{2}.
     Then intuitionistic disjunction and falsehood correspond to the cases where $h > 1$ and $h < 1$,
     while intuitionistic \emph{subtraction} (also called \emph{exclusion} or \emph{co-implication})
     and negation correspond to the cases where $v > 1$ and $v < 1$. This is illustrated in
-    Figure~\ref{fig:subtraction}, which shows the natural encoding of the left introduction rule for
-    subtraction in sequent calculus into scroll nets. \WP{2} will prove that this encoding is sound
-    and complete for intuitionistic, bi-intuitionistic and classical logic by considering various
-    restrictions on the shape of generalized scrolls, as well as the topological properties of the
-    graphs of inference rules that ensue. It will also ensure that the sequentialization and
+    Fig.~\ref{fig:subtraction}, which shows the natural encoding of the left introduction rule for
+    subtraction in sequent calculus into scroll nets. \WP{2} will prove that generalized scrolls
+    lead to a sound and complete characterization of intuitionistic, bi-intuitionistic and classical
+    logic by considering various restrictions on their shapes, as well as the topological properties
+    of the graphs of inference rules that ensue. It will also ensure that the sequentialization and
     normalization results of \WP{1} extend well to this setting, which would constitute important
     contributions to both \CH{1} and \CH{2} by providing a non-trivial equational theory for
     classical and bi-intuitionistic proofs.
+
+\begin{figure}
+  \captionsetup[subfigure]{justification=centering}
+  \centering
+  \begin{subfigure}[b]{0.30\textwidth}
+    $$\scalebox{0.85}{
+    $\prftree[r]{$L{-}$}{\prfsummary[$\pi$]{\Gamma, A \vdash B, \Delta}}{\Gamma, A - B \vdash \Delta}$
+    }$$
+    $$\includepdf{4cm}{subtraction}$$
+    \caption{Encoding intuitionistic subtraction}
+    \label{fig:subtraction}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.49\textwidth}
+    $$\includepdf{8cm}{factorial}$$
+    \caption{Encoding natural numbers and the factorial function}
+    \label{fig:factorial}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.2\textwidth}
+    $$\includepdf{4cm}{modal}$$
+    \caption{Proof in predicate modal logic of $\forall x. \square (p(x) \land q(x)) \vdash (\forall x. \square p(x)) \land (\forall x. \square q(x))$}
+    \label{fig:modal}
+  \end{subfigure}
+  \caption{Extensions of scroll nets to richer logics (\WP{2} -- \WP{4})}
+  \label{fig:extensions}
+\end{figure}
 
     \item Once disjunction is properly handled by the results of \WP{2}, adding \emph{smallest} and
     \emph{greatest fixpoints} of propositions is a natural step to take, that would bring the
     computational power of state-of-the-art functional programming languages. Indeed, the
     combination of these two constructs corresponds to \emph{(co-)recursive algebraic data types}
     through the CHC, which are essential to express (co-)recursive computation on (infinite)
-    tree-structured data. Figure~\ref{fig:factorial} gives a proof-of-concept of how this could be
+    tree-structured data. Fig.~\ref{fig:factorial} gives a proof-of-concept of how this could be
     implemented in scroll nets through the classic example of the factorial function. The idea is to
     enlarge the space of correct proofs by allowing \emph{self-reference} in inference rules, here
     represented by the arrow that calls the \texttt{fac} scroll into itself. \WP{3} will explore
@@ -437,17 +453,17 @@ state-of-the-art models of computation, achieving \KO{2}.
     experimental attempt at capturing both \emph{modal} and \emph{higher-order} logics with a
     special kind of epistemic negation called ``broken cut'', represented by a dashed ellipse whose
     content should be interpreted as ``possibly not true''\footcite{maGammaGraphCalculi2018}. This
-    is illustrated in Figure~\ref{fig:modal}, where the left scroll can be read classically as $\neg
+    is illustrated in Fig.~\ref{fig:modal}, where the left scroll can be read classically as $\neg
     \exists x. \diamond \neg (p(x) \land q(x))$ which is classically equivalent to the premiss
     $\forall x. \square (p(x) \land q(x))$: the LoI connecting $p$, $q$ and the outloop represents
     the universally quantified variable $x$, while the dashed inloop represents necessity. \WP{4}
     will explore the precise inference rules governing these constructs, trying to accomodate the
     partial descriptions left in Peirce's writings to the modern CHC conception inherent to scroll
     nets. We expect that LoI can express \emph{dependent product/sum} types and \emph{identity}
-    types, while broken cuts could capture either type-theoretic modalities or type-theoretic
-    universes (or both), thus contributing greatly to \KO{1}. \WP{4} will also be essential to reach
-    the necessary expressive power to simulate CoIC, and thus situate scroll nets as a realistic new
-    foundation for ITPs.
+    types, while broken cuts could capture either type-theoretic \emph{modalities} or type-theoretic
+    \emph{universes} (or both), thus contributing greatly to \KO{1}. \WP{4} will also be essential
+    to reach the necessary expressive power to simulate CoIC, and thus situate scroll nets as a
+    realistic new foundation for ITPs.
 
     \item The Functional Machine Calculus (FMC) and Relational Machine Calculus (RMC) are two
     foundational models of computation introduced very recently by W. Heijltjes, also co-inventor of
@@ -464,30 +480,18 @@ state-of-the-art models of computation, achieving \KO{2}.
     recursion of the Kleene star operator with smallest and greatest fixpoints; and \WP{4} to
     account for unification with LoI for dependent types.
 \end{enumerate}
-The project will greatly benefit from the combined expertise of several leading researchers at the
-host's Theory of Computation group. The supervisor, Prof. Das, is a world-expert in the cyclic proof
-theory of fixpoint logics and deep inference for constructive modal logics, making his guidance
-crucial for \WP{3} and \WP{4}. For \WP{2}, the ER will collaborate with Dr. Shillito, a postdoctoral
-fellow with internationally recognized expertise in the syntax and semantics of bi-intuitionistic
-logic. For \WP{4}, the ER will also collaborate with Dr. Marin and Prof. Escardo, eminent
-specialists in modal logics and dependent types/homotopy type theory/ITPs, respectively. For the
-foundational work in \WP{1} and its application in \WP{5}, the ER will collaborate with Prof. Ghica,
-who has been applying graphical formalisms to model computations for several decades in both
-academia and industry. For \WP{5}, the ER will additionally collaborate with Dr. Paul Levy, a
-renowned expert in effectful programming languages. His groundbreaking work in this field was
-recognized with the 2025 Alonzo Church Award for Outstanding Contributions to Logic and Computation.
 
 \paragraph{Interdisciplinarity} By incorporating the CHC at the heart of its methodology, {\proj} is
 by its very nature interdisciplinary, placing itself at the crossroad of \textbf{mathematical logic}
-and \textbf{computer science}. Although not the focus of this project, the long-term vision of
-exploiting scroll nets as a medium for powerful and intuitive GUIs in ITPs warrants future
-intersections with the field of \emph{human-computer interaction} (HCI). Through its dealing with
+and \textbf{programming language theory}. Although not the focus of this project, the long-term
+vision of exploiting scroll nets as a medium for powerful and intuitive GUIs in ITPs warrants future
+intersections with the field of \textbf{human-computer interaction} (HCI). Through its dealing with
 the very foundations of the notion of formal proof, {\proj} also exhibits a strong
-\textbf{philosophical} flavor, which is technically realized through its systematic hermeneutics of
-the original writings of C. S. Peirce on EGs. Peirce was probably one of the last polymathic genius
-in the history of western science, and his broad holistic vision of logic as the formal
-investigation of the principles of scientific enquiry certainly influences the ER's own vision,
-putting {\proj} in the realm of bordering areas of philosophy like \emph{epistemology},
+\textbf{philosophical} flavor, which will be technically realized through its systematic
+hermeneutics of the original writings of C. S. Peirce on EGs. Peirce was probably one of the last
+polymathic genius in the history of western science, and his broad holistic vision of logic as the
+formal investigation of the principles of scientific inquiry certainly influences the ER's own
+vision, putting {\proj} in the realm of bordering areas of philosophy like \emph{epistemology},
 \emph{semiotics} and \emph{metaphysics}.
 
 \paragraph{Gender}
@@ -495,13 +499,13 @@ Not applicable, because the research of {\proj} is of an abstract and theoretica
 
 \paragraph{Open science and research data management}
 All the results of {\proj} will be made available as arXiv pre-prints, with the aim of encouraging
-informal evaluation from the scientific community. Moreover, I will (co-)organise a workshop to
+informal evaluation from the scientific community. Moreover, the ER will (co-)organise a workshop to
 communicate results and encourage feedback from other researchers (Sec. 2.2). The project
 deliverables will be published in the proceedings of high-rated and peer-reviewed conferences and in
-scientific journals. Proceeding publications will be made available on arXiv, and journal
-contributions will be published in Open Access format, for which funding is foreseen. {\proj} does
-not envisage the collection of any kind of data, and eventual software prototypes experimenting with
-an implementation of scroll nets will all be open-sourced.
+scientific journals (Sec.~\ref{ssc:impact:outcomes}). Proceeding publications will be made
+available on arXiv, and journal contributions will be published in Open Access format, for which
+funding is foreseen. {\proj} does not envisage the collection of any kind of data, and eventual
+software prototypes experimenting with an implementation of scroll nets will all be open-sourced.
 
 % At a minimum, address the following aspects:
 
@@ -580,48 +584,74 @@ an implementation of scroll nets will all be open-sourced.
     knowledge between the researcher and the host}
 \label{ssc:excellence:supervision}
 
-At a minimum, address the following aspects:
+\paragraph{Quality of the supervision}
+The project will be supervised by Anupam Das, associate professor at the School of Computer Science
+of the University of Birmingham in the Theory of Computation (ToC) group. Prof. Das is a leading
+expert in proof theory, who is nowadays particularly active in the area of cyclic proofs for
+fixpoint logics (\WP{3}). He has a strong background in deep inference, linear logic and their
+applications to complexity theory, and has also made multiple contributions to the study of
+intuitionistic modal logics (\WP{4}). His supervision will thus be essential to the success of
+{\proj}.
 
-\begin{itemize}
-    \item Describe the qualifications and experience of the supervisor(s).
-    Provide information regarding the supervisors' level of experience on the
-    research topic proposed and their track record of work, including main
-    international collaborations, as well as the level of experience in
-    supervising/training, especially at advanced level (i.e. PhD and postdoctoral
-    researchers).
+Prof. Das has an excellent record of almost 60 publications in top-tier journals (LMCS, JAR) and
+peer-reviewed conference proceedings (LICS, CSL, FSCD, IJCAR, TABLEAUX) in logic, theoretical
+computer science and automated theorem proving. He also has a good track record in mentoring young
+researchers: he co-supervised 2 Ph.D. students with Prof. Escardo and Prof. Paul Levy --- with whom
+the ER expects collaborations on \WP{4} and \WP{5} --- and supervised 5 postdocs thanks to the
+funding that he obtained as a recipient of the UKRI Future Leaders Fellowship \textit{Structure vs.
+Invariants in Proofs} (2020--2024, renewed for 2024--2027). He was himself an MSCA postdoctoral
+fellow from 2017 to 2019.
 
-    \item Planned training activities for the researcher (scientific aspects,
-    management/organisation, horizontal and key transferrable skills...).
+\paragraph{Host-to-applicant transfer of knowledge}
+The project will greatly benefit from the combined expertise of several leading researchers at ToC.
+For \WP{2}, the ER will collaborate with Dr. Shillito, a postdoctoral fellow with internationally
+recognized expertise in the syntax and semantics of bi-intuitionistic logic. For \WP{4}, the ER will
+also collaborate with Dr. Marin and Prof. Escardo, eminent specialists in modal logics and dependent
+types/homotopy type theory/ITPs, respectively. For the foundational work in \WP{1} and its
+application in \WP{5}, the ER will collaborate with Prof. Ghica, who has been applying graphical
+formalisms to model computations for several decades in both academia and industry. For \WP{5}, the
+ER will additionally collaborate with Prof. Paul Levy, a renowned expert in effectful programming
+languages. His groundbreaking work in this field was recognized with the 2025 Alonzo Church Award
+for Outstanding Contributions to Logic and Computation.
 
-    \item For \emph{European Fellowships}: two-way transfer of knowledge between
-    the researcher and host organisation.
+\paragraph{Applicant-to-host transfer of knowledge}
+The ER will bring to ToC his worldwide unique expertise on EGs and their proof theory, as well as
+the application of deep inference and graphical proof theory to interactive theorem proving. He will
+share his knowledge through one-to-one interactions with ToC members and students, by speaking at
+seminars, by supervising Master projects and by (co-)organising a workshop on {\proj} topics
+(Sec.~\ref{ssc:impact:outcomes}).
 
-    \item For \emph{Global Fellowships}: three-way transfer of knowledge between
-    the researcher, host organisation, and associated partner for outgoing phase.
+\paragraph{Training}
+The ER's overarching career goal is to secure a computer science professorship in Europe. In the
+medium term, he aspires to obtain an unsupervised temporary position and funding by an ERC starting
+grant. The acquisition of a prestigious MSCA grant would significantly enhance his prospects. The
+proposed training program developed with the supervisor is structured into five Training Objectives:
+\begin{description}
+    \item[\TO{1}. Gaining scientific knowledge]
+    The {\proj} project will advance the ER's expertise in theoretical domains, complementing his
+    practical software engineering skills obtained during his PhD through substantial implementation
+    work of ITP technology. During his tenure at the host institution, the ER will expand his
+    scientific horizon by immersing himself in the English school of proof theory, the historical
+    centre for the development of the deep inference methodology. Here, he will gain further
+    knowledge of advanced state-of-the-art topics such as cyclic proofs, intuitionistic modal logics
+    and homotopy type theory. At least weekly meetings with his supervisor will serve as forums to
+    assess project progress, explore scientific inquiries, and exchange innovative ideas.
+    
+    \item[\TO{2}. Developing communication and public outreach skills]
 
-    \item Rationale and added-value of the non-academic placement (if applicable)
-    and secondment (if applicable).
-\end{itemize}
+    \item[\TO{3}. Enhance management and leadership skills]
 
-Employers and/or funders should ensure that a person is clearly identified to
-whom researchers can refer for the performance of their professional duties, and
-should inform the researchers accordingly.
+    \item[\TO{4}. Enhance supervision and teaching skills]
 
-Such arrangements should clearly define that the proposed supervisors are
-sufficiently expert in supervising research, have the time, knowledge, experience,
-expertise and commitment to be able to offer the postdoctoral researcher
-appropriate support and provide for the necessary progress and review procedures,
-as well as the necessary feedback mechanisms.
-
-\textbf{Supervision} is one of the crucial elements of successful research. Guiding,
-supporting, directing, advising and mentoring are key factors for a researcher
-to pursue his/her career path. In this context, all MSCA-funded projects are
-encouraged to follow the recommendations outlined in the
-\href{https://data.europa.eu/doi/10.2766/508311}{MSCA Guidelines on Supervision}
-\footnotemark{}.
-
-\footnotetext{While the MSCA Guidelines on Supervision are non-binding,
-funded-projects are strongly encouraged to take them into account.}
+\end{description}   The ER will actively engage
+in mentoring the supervisor's students, providing individual guidance on their research projects,
+and offering courses in specialised subjects such as structural proof theory and interactive theorem
+proving. He will also take on responsibilities such as crafting research internship proposals and
+overseeing interns during 2-3 month periods of study. The ER will actively participate in the ToC's
+weekly seminar series, featuring speakers from renowned global research institutions. Moreover, the
+ER will be an active participant in the national monthly “Chocola” meetings held in Lyon. As a
+fellowship recipient, the ER will also acquire grant management skills and enhance his grant
+proposal writing abilities, supported by the Inria cell of the European Research Network.
 
 \subsection{Quality and appropriateness of the researcher's professional
     experience, competences and skills}

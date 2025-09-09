@@ -12,6 +12,9 @@
 % better environments
 \usepackage[nameinlink, noabbrev]{cleveref}
 \usepackage[shortlabels]{enumitem}
+\usepackage{tikz}
+\usetikzlibrary{shapes.symbols,arrows.meta}
+\usepackage{pgfgantt}
 \usepackage{booktabs}
 \usepackage{caption}
 \usepackage{subcaption}
@@ -24,6 +27,12 @@
             stretch=10,         % smaller values (default 20, 20) to avoid blurring
             shrink=10]{microtype}
 \SetTracking{encoding={*}, shape=sc}{40}
+
+\RedeclareSectionCommand[
+  beforeskip=1pt plus 2pt minus 1pt,
+  afterskip=-0.5em
+]{paragraph}
+
 
 % bibliography
 \usepackage[style=mla,backend=biber]{biblatex}
@@ -60,6 +69,8 @@
 \newcommand{\CH}[1]{$\mathsf{C#1}$}
 \newcommand{\KO}[1]{$\mathsf{KO#1}$}
 \newcommand{\WP}[1]{$\mathsf{WP#1}$}
+\newcommand{\MI}[1]{$\mathsf{M#1}$}
+\newcommand{\DE}[1]{$\mathsf{D#1}$}
 \newcommand{\TO}[1]{$\mathsf{TO#1}$}
 \newcommand{\xstep}[1]{\xrightarrow{#1}}
 
@@ -111,9 +122,9 @@
 \subsection{Quality and pertinence of the project's research and innovation objectives}
 \label{ssc:excellence:quality}
 
-\textbf{Proof assistants} --- also called \emph{interactive theorem provers} (ITPs) --- are software
-tools used to rigorously verify formal modelling and reasoning. Contemporary systems such as
-\emph{Rocq}, \emph{Lean}, and
+Proof assistants --- also called \textbf{interactive theorem provers (ITPs)} --- are software tools
+used to rigorously verify formal modelling and reasoning. Contemporary systems such as \emph{Rocq},
+\emph{Lean}, and
 \emph{Isabelle}\footcite{the_rocq_development_team_2025_15149629,10.1007/978-3-030-79876-5_37,nipkow2002isabelle}
 offer powerful frameworks for constructing formal specifications and proofs: they have been used
 successfully in various applications, ranging from the verification of advanced theorems in
@@ -121,137 +132,35 @@ mathematics to the certification of complex software artifacts such as programmi
 compilers, operating system kernels and cryptographic
 protocols\footcite{gonthierFormalProofFour2008,leroyFormalVerificationRealistic2009,kleinSeL4FormalVerification2009,Barthe2014}.
 Yet they remain notoriously difficult to learn and use, limiting broader adoption in various
-settings where they could bring transformative societal impact, such as:
-\begin{itemize}
-    \item \textbf{mathematics education}, where they could act as a unifying medium for interactive
-    exploration and understanding of mathematical concepts, fostering closer collaboration amongst
-    students and offloading some teaching burden (e.g. grading) through
-    automation\footcite{minhResearchReportProof2024};
-    \item \textbf{formal verification}, where they could bring higher standards of quality assurance
-    (QA) to businesses that rely on complex hardware and software systems, especially in
-    safety-critical industries such as healthcare, transportation and energy;
-    \item \textbf{artificial intelligence (AI) safety}, where the uncertainty inherent to current
-    technologies based on probabilistic techniques such as large language models (LLMs) could be
-    mitigated by the exact logical reasoning capabilities of ITPs, an approach sometimes termed
-    \emph{neurosymbolic AI}.
-\end{itemize}
-In view of this large potential for applications, it is natural to ask what exactly limits adoption
-of the current generation of ITPs. The recent surge of interest arising both in academia and
-industry --- in great part due to the popularity of the Lean language and its Mathlib library ---
-suggests that social factors such as public communication, community building, and vast amounts of
-expository content and learning resources all play an important role in the widespread appropriation
-of this complex technology. Even more recently, the promise of a new kind of generative AI free from
-so-called ``hallucinations'' that could aid in accelerating scientific discoveries has been a
-powerful narrative attracting much attention and funding\footcite{metzMathPathChatbots2024}.
+settings where they could bring transformative societal impact such as \emph{mathematics education},
+\emph{formal verification} and \emph{AI safety}.
 
-However, many researchers in the field agree that current ITPs suffer from more \emph{foundational}
-issues that affect directly their accessibility and ease of use, as well as their ability to scale
-to larger developments. While these issues are quite diverse in nature, a recurring theme since the
-birth of the technology in the 60s is the overwhelming \textbf{bureaucracy} involved in
-formalization efforts: formal proofs require a level of care and detail that is far superior and
-much more time consuming than what is expected from informal paper proofs. This has been measured by
-the so-called \emph{DeBruijn factor} comparing the size of formal and informal proofs, often
-reaching a value of 4 on average\footcite{debruijn_factor}.
+The experienced researcher's (ER) work tackles the problem of usability from an original angle,
+centering around \textbf{human interaction}. Building on \emph{Proof-by-Pointing} and
+\emph{Proof-by-Linking}\footcite{PbP,Chaudhuri2013}, the \emph{Proof-by-Action} (PbA) paradigm
+introduced in the ER's PhD thesis enables the construction of proofs by directly manipulating
+logical statements in a \emph{graphical user interface} (GUI) via natural gestures like
+\emph{pointing} and \emph{drag-and-drop}. This is still rooted in rigorous \textbf{proof theory} by
+drawing on the recent methodology of \emph{deep inference}\footcite{deep_inference}, and complements
+fully automated approaches by making \textbf{interactive refinement} of proofs more intuitive, thus
+lowering the barrier to entry.
 
-The main approach to tame this complexity has been to \emph{automate} the various processes involved
-in formalization, which fall roughly within two categories: \emph{elaboration}, concerned with the
-translation of requirements expressed in natural language or mathematical notations into precise
-logical specifications; and \emph{synthesis}, where the system attempts to automatically generate
-(parts of) proofs and programs meeting these specifications. Progress on both fronts is currently
-being made with the help of state-of-the-art machine learning techniques, including
-LLMs\footcite{blaauwbroekLearningGuidedAutomated2024}. More theoretical research has also been
-pursued in \textbf{type theory}, the field studying the logical formalisms at the foundation of all
-modern ITPs. They are the ultimate backbone on which relies our \emph{trust} in the output of these
-systems, and thus a key differentiator with respect to purely probabilistic approaches to
-(generative) AI.
-% In particular, the influential program of \emph{homotopy type theory} kickstarted by Fields medalist
-% Vladimir Voevodsky has exhibited new ways to understand and mechanize the concept of
-% \emph{equality}, which is known as an important weakness of traditional type theories.
-% Type-theoretical foundations are the ultimate backbone on which relies our \emph{trust} in the
-% output of ITPs, and thus a key differentiator with respect to purely probabilistic approaches to
-% (generative) AI.
+In this direction, the \textbf{scroll nets} introduced recently by the ER offer a new
+\textbf{diagrammatic} framework rooted in Peirce's \emph{existential graphs} (EGs). One performs
+proofs in EGs by rewriting diagrams in contexts of arbitrary depth
+(Fig.~\ref{fig:modus-ponens-dynamic}), and scroll nets record these rewrites \emph{statically} as
+arrows in a directed graph (Fig.~\ref{fig:modus-ponens-static}). This yields a representation of
+proofs that subsumes the \emph{simply-typed $\lambda$-calculus} (STLC), the programming language underlying
+all modern ITPs.
 
-However, little attention has been devoted by the ITP community to another discipline closely
-related to type theory: \textbf{proof theory}. In particular, \emph{structural} proof theory is its
-branch concerned with the study of combinatorial structures for representing and manipulating
-proofs. One can identify mainly three motivations for this study:
-\begin{description}
-    \item[Challenge 1 (\CH{1})] is the fundamental problem of \textbf{proof identity}, also
-    known as Hilbert's 24\textsuperscript{th} problem\footcite{strasburger-problem-2019}. It aims to
-    answer the philosophical question ``what is a proof?'', and the mathematical question ``when are
-    two proofs equal?''. It is thus intimately related to \emph{homotopy type theory} which also
-    investigates the structure of \emph{equality}, a known weakness of many type theories.
+Motivated by this discovery, the {\proj} project will pursue the following ambitious objective:
 
-    \item[Challenge 2 (\CH{2})] is to find proof systems for \textbf{non-standard logics} ---
-    such as \emph{modal}, \emph{intermediate}, \emph{substructural} and \emph{fixpoint} logics ---
-    satisfying good enough properties as to render an algorithmic treatment of these logics
-    tractable. The most important property in this respect is that of \textbf{cut elimination},
-    which is essential both to reduce the complexity of \emph{proof search} (proof \emph{synthesis}
-    in ITP terminology), and to ensure productivity of \emph{program execution} through the
-    \textbf{Curry-Howard correspondence} (CHC) between proofs and programs. The CHC is also at the
-    heart of the \emph{calculus of inductive constructions} (CoIC), which is the type theory used by
-    the two leading proof assistants Rocq and Lean. Researchers are increasingly interested in
-    type-theoretic formulations of these logics as they provide expressive languages for specifying
-    behaviors of programs that go beyond pure functions, including effects (modal logics),
-    resource-sensitivity (modal and substructural logics) and recursion (modal and fixpoint
-    logics)\footcite{tangModalEffectTypes2025,marshallLinearityUniquenessEntente2022,cloustonGuardedLambdaCalculusProgramming2017}.
-    
-    \item[Challenge 3 (\CH{3})] is to improve the \textbf{efficiency} of computational
-    procedures on proofs, but also on programs through the CHC. A well-established principle in
-    computer science and software engineering is that choosing appropriate data structures for a
-    problem can lead to orders-of-magnitude improvements in efficiency. Finding the right data
-    structures for such general classes of objects as proofs and programs is thus a very enticing
-    goal with wide implications, including faster automation in ITPs.
-\end{description}
-
-In the past decades, two families of proof formalisms have emerged to tackle these challenges:
-\begin{description}
-    \item \textbf{Graphical proof systems} represent proof objects as \emph{graphs} instead of
-    \emph{trees} of inference rules.
-    % Many programming systems incorporate graph representations of programs in their compilation
-    % pipeline in order to optimize the flow of computation, including popular machine learning
-    % frameworks based on neural networks such as TensorFlow and PyTorch. Indeed, graphs appear
-    % naturally when one wants to abstract from the order in which operations are sequenced, to
-    % leverage \emph{parallelism} or to maximize \emph{sharing} of computations.
-    \emph{Proof nets}\footcite{girard-linear-1987} are one of the first graphical proof formalisms,
-    meant to reduce the bureauceacy of proofs in linear logic (\CH{2}) in order to identify their
-    essence (\CH{1}). Further developments stemming from proof nets like the \emph{geometry of
-    interaction} and \emph{interaction nets} have found applications in program optimization for
-    hardware synthesis and parallelized
-    execution\footcite{ghicaGeometrySynthesisStructured2007,mackieInteractionNetImplementation2011}
-    (\CH{3}). The \emph{combinatorial proofs} of Hughes are direct decendants of proof nets mainly
-    concerned with \CH{1}\footcite{Hughes_2006}, and \emph{string diagrams} from category theory have
-    been applied to logic and programming languages, with well-known connections to proof
-    nets\footcite{piedeleuIntroductionStringDiagrams2025}.
-
-    \item \textbf{Deep inference} generalizes Gentzen-style proof systems by allowing inference
-    rules to be applied at any depth inside of a formula, rather than being restricted to its
-    top-level logical connective. The terminology of ``deep inference'' was proposed by Alessio
-    Guglielmi, who invented the \emph{calculus of structures} to overcome the inability of sequent
-    calculus to capture the substructural logic $\mathsf{MV}$\footcite{Guglielmi1999ACO}. Since
-    then, calculi of structures and so-called \emph{nested sequent calculi} have been introduced to
-    give proof systems enjoying cut-elimination to most substructural, modal and intermediate
-    logics\footcite{kuznets_maehara-style_2019,postniece_proof_2010} (\CH{2}). Deep inference has also
-    been used in the study of proof complexity, providing in some cases exponential speedup over
-    sequent calculus with respect to proof size, as well as quasipolynomial-time
-    cut-elimination\footcite{dasRelativeProofComplexity2015a,bruscoliQuasipolynomialNormalisationDeep2016a}
-    (\CH{3}). Lastly, many deep inference formalisms enjoy CHC-style interpretations with variants of
-    $\lambda$-calculus, which also improve space
-    efficiency\footcite{guenot_nested_2013,gundersenAtomicLambdaCalculus2013}.
-\end{description}
-
-The experienced researcher (ER) has accumulated significant knowledge of graphical and deep
-inference proof systems, as well as their applications to ITPs. This expertise was developed during
-his PhD thesis\footcite{donatoDeepInferenceGraphical2024} titled ``Deep Inference for Graphical
-Theorem Proving'', where he designed various proof formalisms that enable a novel approach to
-interactive theorem proving based on \textbf{direct manipulation} of logical statements in a
-graphical user interface (GUI). This extends earlier works on \emph{Proof-by-Pointing}\footcite{PbP}
-and \emph{Proof-by-Linking}\footcite{Chaudhuri2013} where proofs are constructed through
-\emph{click} and \emph{drag-and-drop} gestures on formulas, to a more encompassing paradigm termed
-\emph{Proof-by-Action} (PbA). The goal is to improve accessibility and usability of ITPs by focusing
-on better principles for \emph{human interaction}, complementing more mainstream research around
-machine automation. Applying a mixture of graphical and deep inference proof theory to that effect
-is a highly original endeavor, with no similar efforts in the contemporary research landscape.
+\setlength{\fboxsep}{5pt}
+\fullwidthbox{\textit{ 
+    Establish \textbf{scroll nets} as the foundation for a new generation of \textbf{ITPs}
+    that support \textbf{interactive refinement} of formal specifications, proofs and programs through
+    	\textbf{diagrammatic manipulations} in a GUI.
+}}
 
 \begin{figure}
   \captionsetup[subfigure]{justification=centering}
@@ -282,71 +191,144 @@ is a highly original endeavor, with no similar efforts in the contemporary resea
   \label{fig:modus-ponens}
 \end{figure}
 
-In continuation of this programme, the ER has introduced in his last
-preprint\footcite{donatoScrollNets2025} a new graphical framework called \textbf{scroll nets}. It is
-based on a long forgotten diagrammatic proof system called \emph{existential graphs} (EGs), invented
-by the famous philosopher and logician Charles Sanders Peirce at the dusk of the
-19\textsuperscript{th} century --- thus predating the very existence of proof theory and computer
-science. Proofs in EGs are defined by a small set of inference rules that \emph{dynamically} rewrite
-diagrams in contexts of arbitrary depth (Fig.~\ref{fig:modus-ponens-dynamic}), thus combining
-features of both deep inference and string diagrams\footcite{bonchi_diagrammatic_2024}. Scroll nets
-provide a \emph{static} way to represent proofs in EGs by recording explicitly applications of
-inference rules in a \emph{directed graph} (Fig.~\ref{fig:modus-ponens-static}), combining the
-type-theoretic methodology of internalizing inference rules inside judgments with a graphical
-structure similar to proof nets and combinatorial proofs. Crucially, this graph shares the same
-nodes as the (tree-shaped) statements involved in the proof, making scroll nets a more compact
-representation than other graphical proof structures, but also surprisingly a variant of the notion
-of \emph{bigraph}. Bigraphs were introduced by Milner as a foundational combinatorial structure
-encompassing most models of concurrent/parallel computation, including Petri nets and his own CCS
-and $\pi$-calculus\footcite{milnerBigraphicalReactiveSystems2001}. In his preprint, the ER shows how
-scroll nets naturally subsume the simply-typed $\lambda$-calculus --- the common kernel of all type
-theories used in ITPs --- by identifying a generalization of the notion of \emph{detour} from
-natural deduction that abstracts away the shape of formulas.
-
-All these discoveries hint toward the potential of scroll nets as a very expressive framework for
-both proof theory and type theory, unifying features found in most of the formalisms that have
-emerged from the two disciplines in a natural and efficient way. Moreover, the ER's vision is to
-exploit the diagrammatic nature of scroll nets to redesign not only the \emph{backend} but also the
-\emph{frontend} of ITPs, making them the \emph{interaction
-substrate}\footcite{mackayInteractionSubstratesCombining2025} of a new kind of GUI in the PbA
-paradigm. Indeed, what crucially distinguishes scroll nets from other deep inference or graphical
-proof formalisms is their suitability for \emph{interactive manipulation}: every inference rule
-possesses a natural spatial interpretation as a \emph{gesture} on a logical statement, either
-inserting/erasing a statement at a designated location through \emph{pointing} (looping arrows in
-Fig.~\ref{fig:modus-ponens-static}), or (un)copying to/from some location through
-\emph{drag-and-drop} (non-looping arrows in Fig.~\ref{fig:modus-ponens-static}). This natural
-semantics of gestures as a means of manipulating located objects is very familiar to users of modern
-GUIs in virtually every domain, and could lead to a \textbf{groundbreaking ``no-code'' approach to
-interactive theorem proving} that is much more intuitive than current textual interfaces.
-
 Given the early stage of the theory of scroll nets and the expertise of the Theory of Computation
 group at Birmingham hosting the ER, the {\proj} project will progress towards this vision by
 focusing on the following Key Objectives:
 
-% One goal is to make automation (in particular synthesis) easier to understand
-% for humans, so as to tighten the interaction loop and thus enhance the collaboration between the
-% user and the system. Having more readable inputs and outputs is also crucial to enable \emph(audits)
-% of formal developments by external authorities, for instance in the certification of safety-critical
-% software by governmental agencies.
-
-% \setlength{\fboxsep}{5pt}
-% \fullwidthbox{
-    \begin{description}
-        \item[(\KO{1})] extend the theory of scroll nets to account for \textbf{richer logics}, beyond minimal
-        implicative logic;
-        \item[(\KO{2})] find natural and efficient \textbf{translations} of state-of-the-art proof
-        systems and typed models of computation into scroll nets.
-    \end{description}
-% }
-
-This should support the following very ambitious long-term goal of the project:
-
 \setlength{\fboxsep}{5pt}
-\fullwidthbox{\textit{ 
-    Establish \textbf{scroll nets} as the foundation for a new generation of ITPs
-    that support \textbf{interactive refinement} of formal specifications, proofs and programs through
-    \textbf{diagrammatic manipulations}.
-}}
+\fullwidthbox{
+    \begin{description}
+        \item[\KO{1}.] extend the theory of scroll nets to account for \textbf{richer logics},
+        beyond minimal implicative logic;
+        \item[\KO{2}.] find natural and efficient \textbf{translations} of state-of-the-art (SOTA)
+        proof systems and programming languages into scroll nets.
+    \end{description}
+}
+
+\subsubsection{State-of-the-art and contributions}
+
+Despite their potential, the adoption of ITPs is limited by both social and foundational factors.
+While community building, public communication and learning resources are crucial (as shown by the
+success of Lean and its Mathlib library), many researchers point to deeper issues. A key problem is
+the overwhelming \textbf{bureaucracy} of formalization: formal proofs demand a level of detail that
+makes them far more time-consuming than informal proofs, with proof size around
+four times bigger on average\footcite{debruijn_factor}.
+
+The primary strategy to manage this complexity is \emph{automation}, covering both the
+\emph{elaboration} of specifications from informal mathematical texts and the \emph{synthesis} of
+proofs/programs satisfying these specifications. While research on both fronts progresses with the
+help of SOTA machine learning techniques\footcite{blaauwbroekLearningGuidedAutomated2024},
+theoretical work in \textbf{type theory} remains fundamental. As the logical backbone of modern
+ITPs, type theory provides the trust and reliability that distinguishes these systems from purely
+probabilistic AI.
+
+The modern version of type theory was born in the 1970s from Martin-Löf's work, following the
+\textbf{Curry-Howard correspondence} (CHC) between formal proofs (in the system of \emph{natural
+deduction}) and computer programs (expressed in the STLC). Despite this remarkable connection, proof
+theory and type theory have been developed mostly as separate disciplines with different conceptual
+apparati, preventing cross-pollination of results. This has led the ITP community to devote little
+attention to \emph{structural} proof theory, the branch of proof theory which studies combinatorial
+structures for representing and manipulating proofs. The latter could however bring much
+improvements to the foundations of ITPs, as illustrated by the three broad challenges that motivate
+its study:
+\begin{description}
+    \item[\CH{1}.] Challenge 1 is the fundamental problem of \textbf{proof identity}, also
+    known as Hilbert's 24\textsuperscript{th} problem\footcite{strasburger-problem-2019}. It aims to
+    answer the philosophical question ``what is a proof?'', and the mathematical question ``when are
+    two proofs equal?''. It is thus intimately related to \emph{homotopy type theory} which also
+    investigates the structure of \emph{equality}, a known weakness of many type theories.
+
+    \item[\CH{2}.] Challenge 2 is to find proof systems for \textbf{non-standard logics} --- such as
+    \emph{modal}, \emph{intermediate}, \emph{substructural} and \emph{fixpoint} logics ---
+    satisfying good enough properties as to render an algorithmic treatment of these logics
+    tractable. The most important property in this respect is that of \textbf{cut elimination},
+    which is essential both to reduce the complexity of \emph{proof search} (proof synthesis in ITP
+    terminology), and to ensure productivity of \emph{program execution} through the CHC.
+    Researchers are increasingly interested in type-theoretic formulations of non-standard logics as
+    they provide expressive languages for specifying behaviors of programs that go beyond pure
+    functions, including effects (modal logics), resource-sensitivity (modal and substructural
+    logics) and recursion (modal and fixpoint
+    logics)\footcite{tangModalEffectTypes2025,marshallLinearityUniquenessEntente2022,cloustonGuardedLambdaCalculusProgramming2017}.
+    
+    \item[\CH{3}.] Challenge 3 is to improve the \textbf{efficiency} of computational
+    procedures on proofs, but also on programs through the CHC. A well-established principle in
+    computer science and software engineering is that choosing appropriate data structures for a
+    problem can lead to orders-of-magnitude improvements in efficiency. Finding the right data
+    structures for such general classes of objects as proofs and programs is thus a very enticing
+    goal with wide implications, including faster automation in ITPs.
+\end{description}
+
+In the past decades, two families of proof formalisms have emerged to tackle these challenges:
+\begin{description}
+    \item \textbf{Graphical proof systems} represent proof objects as \emph{graphs} instead of
+    \emph{trees} of inference rules.
+    % Many programming systems incorporate graph representations of programs in their compilation
+    % pipeline in order to optimize the flow of computation, including popular machine learning
+    % frameworks based on neural networks such as TensorFlow and PyTorch. Indeed, graphs appear
+    % naturally when one wants to abstract from the order in which operations are sequenced, to
+    % leverage \emph{parallelism} or to maximize \emph{sharing} of computations.
+    \emph{Proof nets}\footcite{girard-linear-1987} are one of the first graphical proof formalisms,
+    meant to reduce the bureauceacy of proofs in linear logic (\CH{2}) in order to identify their
+    essence (\CH{1}). Further developments stemming from proof nets like the \emph{geometry of
+    interaction} and \emph{interaction nets} have found applications in program optimization for
+    hardware synthesis and parallelized
+    execution\footcite{ghicaGeometrySynthesisStructured2007,mackieInteractionNetImplementation2011}
+    (\CH{3}). The \emph{combinatorial proofs} of Hughes are direct decendants of proof nets mainly
+    concerned with \CH{1}\footcite{Hughes_2006}, and \emph{string diagrams} from category theory have
+    been applied to logic and programming languages, with well-known connections to proof
+    nets\footcite{piedeleuIntroductionStringDiagrams2025}.
+
+    \item \textbf{Deep inference} generalizes Gentzen-style proof systems by allowing inference
+    rules to be applied at any depth inside of a formula, rather than being restricted to its
+    top-level logical connective.
+    % The terminology of ``deep inference'' was proposed by Alessio Guglielmi, who invented the
+    % \emph{calculus of structures} to overcome the inability of sequent calculus to capture the
+    % substructural logic $\mathsf{MV}$\footcite{Guglielmi1999ACO}.
+    Calculi of structures and so-called \emph{nested sequent calculi} have been introduced to give
+    proof systems enjoying cut-elimination to most substructural, modal and intermediate
+    logics\footcite{kuznets_maehara-style_2019,postniece_proof_2010} (\CH{2}). Deep inference has
+    also been used in the study of proof complexity, providing in some cases exponential speedup
+    over sequent calculus with respect to proof size, as well as quasipolynomial-time
+    cut-elimination\footcite{dasRelativeProofComplexity2015a,bruscoliQuasipolynomialNormalisationDeep2016a}
+    (\CH{3}). Lastly, many deep inference formalisms enjoy CHC-style interpretations with variants
+    of $\lambda$-calculus, which also improve space
+    efficiency\footcite{guenot_nested_2013,gundersenAtomicLambdaCalculus2013}.
+\end{description}
+
+It is in continuation of this line of research and of his PhD
+thesis\footcite{donatoDeepInferenceGraphical2024} that the ER introduced in his last preprint the
+graphical framework of \textbf{scroll nets}\footcite{donatoScrollNets2025}. It is based on a long
+forgotten diagrammatic proof system called \emph{existential graphs} (EGs), invented by the famous
+philosopher and logician Charles Sanders Peirce at the dusk of the 19\textsuperscript{th} century
+--- thus predating the very existence of proof theory and computer science. Scroll nets combine the
+type-theoretic methodology of internalizing inference rules inside judgments with a graphical
+structure comparable to proof nets and combinatorial proofs. This graph shares the same nodes as the
+propositions involved in the proof, making scroll nets a more compact representation than these
+graphical proof structures, but also surprisingly a variant of the notion of \emph{bigraph}.
+Bigraphs were introduced by Milner as a foundational combinatorial structure encompassing most
+models of concurrent/parallel computation, including Petri nets and his own CCS and
+$\pi$-calculus\footcite{milnerBigraphicalReactiveSystems2001}. Contrary to proof nets which stem
+from sequent calculus, scroll nets also enjoy a notion of \emph{detour} arising from the interplay
+of introduction and elimination rules, making them closer to natural deduction. Although they were
+developed completely independently, EGs and natural deduction were both born from the desire to
+construct a formalism that comes as close as possible to actual reasoning, and is thus more amenable
+to human manipulation.
+
+All these discoveries hint toward the potential of scroll nets as a very expressive framework for
+both proof theory and type theory, unifying features found in most of the formalisms that have
+emerged from the two disciplines in a natural and efficient way. The ER's vision is to exploit the
+diagrammatic nature of scroll nets to redesign both the \emph{frontend} and \emph{backend} of ITPs,
+making them the \emph{interaction substrate}\footcite{mackayInteractionSubstratesCombining2025} of a
+new kind of GUI in the PbA paradigm. Indeed, what crucially distinguishes scroll nets from other
+graphical and deep inference proof systems is their suitability to \emph{interactive manipulation}:
+every inference rule possesses a natural interpretation as a \emph{gesture} on logical statements,
+either \emph{pointing} at a statement to be inserted or deleted (looping arrow in
+Fig.~\ref{fig:modus-ponens-static}), or (un)copying a designated statement through
+\emph{drag-and-drop} (non-looping arrow in Fig.~\ref{fig:modus-ponens-static}). This natural
+semantics of gestures as a means of moving objects in space is very familiar to users of modern
+GUIs, and the ER believes it could lead to a \textbf{groundbreaking ``no-code'' approach to formal
+specification} that is much more intuitive than current textual interfaces.
+ 
 
 % At a minimum, address the following aspects:
 
@@ -361,13 +343,16 @@ This should support the following very ambitious long-term goal of the project:
 \subsection{Soundness of the proposed methodology}
 \label{ssc:excellence:methodology}
 
-The research objectives of {\proj} are organised into five technical work packages, detailed below.
+
+The research objectives of {\proj} are organised into four technical work packages, detailed below.
 The core theory will be developed in \WP{1} and then extended to richer logics in \WP{2}, \WP{3} and
-\WP{4}, meeting \KO{1}. This will culminate in \WP{5} with the study of translations from
-state-of-the-art models of computation, achieving \KO{2}.
-\begin{enumerate}
-    \item \WP{1} will work in the restricted and well-understood setting of minimal implicative
-    logic, with the aim to prove formally two key meta-theoretic properties of scroll nets:
+\WP{4}, meeting \KO{1}. \WP{3} and \WP{4} will deal with crucial features found in SOTA proving and
+programming systems like recursion and dependent types, contributing to \KO{2}.
+
+
+    \WP{1}.~~ {\proj} will start in the restricted and well-understood setting of minimal
+    implicative logic, with the aim to prove formally two key meta-theoretic properties of scroll
+    nets:
     \begin{itemize}
         \item \textbf{Normalization} is a standard property of structural proof
         systems that asserts the existence (and sometimes unicity) of a \emph{normal form} associated to
@@ -391,7 +376,7 @@ state-of-the-art models of computation, achieving \KO{2}.
         known to have any equivalent in the proof-theoretic landscape.
     \end{itemize}
     
-    \item Oostra already identified how to capture intuitionistic disjunction in EGs, by considering
+    \WP{2}.~~ Oostra already identified how to capture intuitionistic disjunction in EGs, by considering
     a \emph{horizontal} generalization of the scroll where one can have an arbitrary number $h$ of
     inloops attached to the same outloop\footcite{oostra_graficos_2010}. The ER has performed
     preliminary experiments on a further \emph{vertical} generalization of the scroll where inloops
@@ -409,77 +394,78 @@ state-of-the-art models of computation, achieving \KO{2}.
     contributions to both \CH{1} and \CH{2} by providing a non-trivial equational theory for
     classical and bi-intuitionistic proofs.
 
-\begin{figure}
-  \captionsetup[subfigure]{justification=centering}
-  \centering
-  \begin{subfigure}[b]{0.30\textwidth}
-    $$\scalebox{0.85}{
-    $\prftree[r]{$L{-}$}{\prfsummary[$\pi$]{\Gamma, A \vdash B, \Delta}}{\Gamma, A - B \vdash \Delta}$
-    }$$
-    $$\includepdf{4cm}{subtraction}$$
-    \caption{Encoding intuitionistic subtraction}
-    \label{fig:subtraction}
-  \end{subfigure}
-  \begin{subfigure}[b]{0.49\textwidth}
-    $$\includepdf{8cm}{factorial}$$
-    \caption{Encoding natural numbers and the factorial function}
-    \label{fig:factorial}
-  \end{subfigure}
-  \begin{subfigure}[b]{0.2\textwidth}
-    $$\includepdf{4cm}{modal}$$
-    \caption{Proof in predicate modal logic of $\forall x. \square (p(x) \land q(x)) \vdash (\forall x. \square p(x)) \land (\forall x. \square q(x))$}
-    \label{fig:modal}
-  \end{subfigure}
-  \caption{Extensions of scroll nets to richer logics (\WP{2} -- \WP{4})}
-  \label{fig:extensions}
-\end{figure}
+    \begin{figure}
+      \captionsetup[subfigure]{justification=centering}
+      \centering
+      \begin{subfigure}[b]{0.30\textwidth}
+        $$\scalebox{0.85}{
+        $\prftree[r]{$L{-}$}{\prfsummary[$\pi$]{\Gamma, A \vdash B, \Delta}}{\Gamma, A - B \vdash \Delta}$
+        }$$
+        $$\includepdf{4cm}{subtraction}$$
+        \caption{Encoding intuitionistic subtraction}
+        \label{fig:subtraction}
+      \end{subfigure}
+      \begin{subfigure}[b]{0.49\textwidth}
+        $$\includepdf{8cm}{factorial}$$
+        \caption{Encoding natural numbers and the factorial function}
+        \label{fig:factorial}
+      \end{subfigure}
+      \begin{subfigure}[b]{0.2\textwidth}
+        $$\includepdf{4cm}{modal}$$
+        \caption{Proof in predicate modal logic of $\forall x. \square (p(x) \land q(x)) \vdash (\forall x. \square p(x)) \land (\forall x. \square q(x))$}
+        \label{fig:modal}
+      \end{subfigure}
+      \caption{Extensions of scroll nets to richer logics (\WP{2} -- \WP{4})}
+      \label{fig:extensions}
+    \end{figure}
 
-    \item Once disjunction is properly handled by the results of \WP{2}, adding \emph{smallest} and
+    \WP{3}~~ Once disjunction is properly handled by the results of \WP{2}, adding \emph{least} and
     \emph{greatest fixpoints} of propositions is a natural step to take, that would bring the
-    computational power of state-of-the-art functional programming languages. Indeed, the
-    combination of these two constructs corresponds to \emph{(co-)recursive algebraic data types}
-    through the CHC, which are essential to express (co-)recursive computation on (infinite)
-    tree-structured data. Fig.~\ref{fig:factorial} gives a proof-of-concept of how this could be
-    implemented in scroll nets through the classic example of the factorial function. The idea is to
-    enlarge the space of correct proofs by allowing \emph{self-reference} in inference rules, here
-    represented by the arrow that calls the \texttt{fac} scroll into itself. \WP{3} will explore
-    this idea further, addressing both \CH{2} and \KO{2}. 
+    computational power of SOTA functional programming languages. Indeed, the combination of these
+    two constructs corresponds to \emph{(co-)recursive algebraic data types} through the CHC, which
+    are essential to express (co-)recursive computation on (infinite) tree-structured data.
+    Fig.~\ref{fig:factorial} gives a proof-of-concept of how this could be implemented in scroll
+    nets through the classic example of the factorial function. The idea is to enlarge the space of
+    correct proofs by allowing \emph{self-reference} in inference rules, here represented by the
+    arrow that calls the \texttt{fac} scroll into itself. \WP{3} will explore this idea further as
+    well as its connections to the emerging technology of \emph{cyclic proofs}, addressing both
+    \CH{2} and \KO{2}. 
 
-    \item Work packages \WP{1} to \WP{3} deal with various flavours of propositional logic,
+    \WP{4}.~~ Work packages \WP{1} to \WP{3} deal with various flavours of propositional logic,
     corresponding to Peirce's system $\mathsf{Alpha}$ of EGs. However, Peirce also explored
-    extensions of EGs with new diagrammatic constructs that go beyond the language of propositional
-    logic: system $\mathsf{Beta}$ used so-called \emph{lines of identity} (LoI) to capture both
-    quantifiers and equality in \emph{predicate logic}; while system $\mathsf{Gamma}$ was a more
-    experimental attempt at capturing both \emph{modal} and \emph{higher-order} logics with a
-    special kind of epistemic negation called ``broken cut'', represented by a dashed ellipse whose
-    content should be interpreted as ``possibly not true''\footcite{maGammaGraphCalculi2018}. This
-    is illustrated in Fig.~\ref{fig:modal}, where the left scroll can be read classically as $\neg
-    \exists x. \diamond \neg (p(x) \land q(x))$ which is classically equivalent to the premiss
-    $\forall x. \square (p(x) \land q(x))$: the LoI connecting $p$, $q$ and the outloop represents
-    the universally quantified variable $x$, while the dashed inloop represents necessity. \WP{4}
-    will explore the precise inference rules governing these constructs, trying to accomodate the
-    partial descriptions left in Peirce's writings to the modern CHC conception inherent to scroll
-    nets. We expect that LoI can express \emph{dependent product/sum} types and \emph{identity}
-    types, while broken cuts could capture either type-theoretic \emph{modalities} or type-theoretic
-    \emph{universes} (or both), thus contributing greatly to \KO{1}. \WP{4} will also be essential
-    to reach the necessary expressive power to simulate CoIC, and thus situate scroll nets as a
-    realistic new foundation for ITPs.
+    extensions of EGs with new diagrammatic constructs that go beyond propositional logic: system
+    $\mathsf{Beta}$ used so-called \emph{lines of identity} (LoI) to capture both quantifiers and
+    equality in \emph{predicate logic}; while system $\mathsf{Gamma}$ was a more experimental
+    attempt at capturing both \emph{modal} and \emph{higher-order} logics with a special kind of
+    epistemic negation called ``broken cut'', represented by a dashed ellipse whose content should
+    be interpreted as ``possibly not true''\footcite{maGammaGraphCalculi2018}. This is illustrated
+    in Fig.~\ref{fig:modal}, where the left scroll can be read classically as $\neg \exists x.
+    \diamond \neg (p(x) \land q(x))$ which is classically equivalent to the premiss $\forall x.
+    \square (p(x) \land q(x))$: the LoI connecting $p$, $q$ and the outloop represents the
+    universally quantified variable $x$, while the dashed inloop represents necessity. \WP{4} will
+    explore the precise inference rules governing these constructs, trying to accomodate the partial
+    descriptions in Peirce's writings to the modern CHC conception of {\proj}. We expect that LoI
+    can express \emph{dependent} types and \emph{identity} types, while broken cuts could capture
+    either type-theoretic \emph{modalities} or type-theoretic \emph{universes} (or both), thus
+    contributing greatly to \KO{1}. \WP{4} will also be essential to reach the necessary expressive
+    power to simulate the \emph{calculus of inductive constructions} --- the type theory underlying
+    the leading proof assistants Rocq and Lean --- and thus situate scroll nets as a realistic
+    foundation for ITPs.
 
-    \item The Functional Machine Calculus (FMC) and Relational Machine Calculus (RMC) are two
-    foundational models of computation introduced very recently by W. Heijltjes, also co-inventor of
-    intuitionistic combinatorial
-    proofs\footcite{heijltjesFunctionalMachineCalculus2023,barrettRelationalMachineCalculus2024,heijltjes_intuitionistic_2019}.
-    They achieve respectively a unification of the two main paradigms of declarative programming,
-    \emph{functional} and \emph{logic} programming, with the more mainstream paradigm of
-    \emph{imperative} programming. An open problem is to find a suitable combination of the FMC and
-    RMC that could subsume all three paradigms. \WP{5} will explore the potential of scroll nets as
-    a solution in the well-typed fragment, by devising translations of the FMC and RMC that preserve
-    both its denotational and operational semantics. This will build on \WP{1} for the operational
-    semantics given by detour elimination; \WP{2} to account for non-determinism and failure with
-    $(n,1)$-scrolls for sum types ($n > 1$) and empty types ($n < 1$); \WP{3} to account for
-    recursion of the Kleene star operator with smallest and greatest fixpoints; and \WP{4} to
-    account for unification with LoI for dependent types.
-\end{enumerate}
+    % \WP{5}.~~ The Functional Machine Calculus (FMC) and Relational Machine Calculus (RMC) are two
+    % foundational models of computation introduced very recently by W. Heijltjes, also co-inventor of
+    % intuitionistic combinatorial
+    % proofs\footcite{heijltjesFunctionalMachineCalculus2023,barrettRelationalMachineCalculus2024,heijltjes_intuitionistic_2019}.
+    % They achieve respectively a unification of the two main paradigms of declarative programming,
+    % \emph{functional} and \emph{logic} programming, with the more mainstream paradigm of
+    % \emph{imperative} programming. An open problem is to find a suitable combination of the FMC and
+    % RMC that could subsume all three paradigms. \WP{5} will explore the potential of scroll nets as
+    % a solution in the well-typed fragment, by devising translations of the FMC and RMC that preserve
+    % both its denotational and operational semantics. This will build on \WP{1} for the operational
+    % semantics given by detour elimination; \WP{2} to account for non-determinism and failure with
+    % $(n,1)$-scrolls for sum types ($n > 1$) and empty types ($n < 1$); \WP{3} to account for
+    % recursion of the Kleene star operator with smallest and greatest fixpoints; and \WP{4} to
+    % account for unification with LoI for dependent types.
 
 \paragraph{Interdisciplinarity} By incorporating the CHC at the heart of its methodology, {\proj} is
 by its very nature interdisciplinary, placing itself at the crossroad of \textbf{mathematical logic}
@@ -586,7 +572,7 @@ software prototypes experimenting with an implementation of scroll nets will all
 
 \paragraph{Quality of the supervision}
 The project will be supervised by Anupam Das, associate professor at the School of Computer Science
-of the University of Birmingham in the Theory of Computation (ToC) group. Prof. Das is a leading
+of the University of Birmingham (UoB) in the Theory of Computation (ToC) group. Prof. Das is a leading
 expert in proof theory, who is nowadays particularly active in the area of cyclic proofs for
 fixpoint logics (\WP{3}). He has a strong background in deep inference, linear logic and their
 applications to complexity theory, and has also made multiple contributions to the study of
@@ -602,17 +588,51 @@ funding that he obtained as a recipient of the UKRI Future Leaders Fellowship \t
 Invariants in Proofs} (2020--2024, renewed for 2024--2027). He was himself an MSCA postdoctoral
 fellow from 2017 to 2019.
 
-\paragraph{Host-to-applicant transfer of knowledge}
-The project will greatly benefit from the combined expertise of several leading researchers at ToC.
-For \WP{2}, the ER will collaborate with Dr. Shillito, a postdoctoral fellow with internationally
-recognized expertise in the syntax and semantics of bi-intuitionistic logic. For \WP{4}, the ER will
-also collaborate with Dr. Marin and Prof. Escardo, eminent specialists in modal logics and dependent
-types/homotopy type theory/ITPs, respectively. For the foundational work in \WP{1} and its
-application in \WP{5}, the ER will collaborate with Prof. Ghica, who has been applying graphical
-formalisms to model computations for several decades in both academia and industry. For \WP{5}, the
-ER will additionally collaborate with Prof. Paul Levy, a renowned expert in effectful programming
-languages. His groundbreaking work in this field was recognized with the 2025 Alonzo Church Award
-for Outstanding Contributions to Logic and Computation.
+\paragraph{Training}
+The ER's overarching career goal is to secure a computer science professorship in Europe. In the
+medium term, he aspires to obtain an unsupervised temporary position and funding by an ERC starting
+grant. The acquisition of a prestigious MSCA grant would significantly enhance his prospects. The
+proposed training program is structured into three Training Objectives:
+\begin{description}
+    \item[\TO{1}. Gaining scientific knowledge]
+    During his tenure at the host institution, the ER will expand his scientific horizon by
+    immersing himself in the English school of proof theory, the historical centre for the
+    development of the deep inference methodology. Here, he will gain further knowledge of advanced
+    SOTA topics such as cyclic proofs, intuitionistic modal logics and homotopy type
+    theory. At least weekly meetings with his supervisor will serve as forums to assess project
+    progress, explore scientific inquiries, and exchange innovative ideas. The ER will also actively
+    participate in the ToC's weekly seminar series, featuring speakers from renowned global research
+    institutions.
+
+    \item[\TO{2}. Enhance management, leadership and grant writing skills]
+    The ER will participate in several management and leadership skills courses offered by UoB's
+    People and Organization Development (POD) division, including Research Team Leader, Effective
+    Financial Management, and other programs on Health \& Safety in the Workplace, Ethics \&
+    Governance in Research, Scientific Communication, Public Engagement \& Dissemination, and
+    Personal Effectiveness. The ER will also attend the POD Grant Writing workshop. These skills
+    will enrich the ER's ability to adapt to changes and undertake a variety of activities to
+    support his high-level interdisciplinary research capability.
+
+    \item[\TO{3}. Enhance supervision and teaching skills]
+    The ER will actively engage in mentoring the supervisor's students, providing individual
+    guidance on their research projects, and offering courses in specialised subjects such as
+    structural proof theory and interactive theorem proving. He will also take on responsibilities
+    such as crafting research internship proposals and overseeing interns during 2-3 month periods
+    of study.
+
+\end{description}
+
+\textbf{Applicant-to-host transfer of knowledge}~ The project will greatly benefit from the combined
+expertise of several leading researchers at ToC. For \WP{2}, the ER will collaborate with Dr.
+Shillito, a postdoctoral fellow with internationally recognized expertise in the syntax and
+semantics of bi-intuitionistic logic. For \WP{4}, the ER will also collaborate with Dr. Marin and
+Prof. Escardo, eminent specialists in modal logics and dependent types/homotopy type theory/ITPs,
+respectively. For the foundational work in \WP{1}, the ER may collaborate with Prof. Ghica, who has
+been applying graphical formalisms to model computations for several decades in both academia and
+industry.
+% For \WP{5}, the ER will additionally collaborate with Prof. Paul Levy, a renowned expert in
+% effectful programming languages. His groundbreaking work in this field was recognized with the 2025
+% Alonzo Church Award for Outstanding Contributions to Logic and Computation.
 
 \paragraph{Applicant-to-host transfer of knowledge}
 The ER will bring to ToC his worldwide unique expertise on EGs and their proof theory, as well as
@@ -621,44 +641,45 @@ share his knowledge through one-to-one interactions with ToC members and student
 seminars, by supervising Master projects and by (co-)organising a workshop on {\proj} topics
 (Sec.~\ref{ssc:impact:outcomes}).
 
-\paragraph{Training}
-The ER's overarching career goal is to secure a computer science professorship in Europe. In the
-medium term, he aspires to obtain an unsupervised temporary position and funding by an ERC starting
-grant. The acquisition of a prestigious MSCA grant would significantly enhance his prospects. The
-proposed training program developed with the supervisor is structured into five Training Objectives:
-\begin{description}
-    \item[\TO{1}. Gaining scientific knowledge]
-    The {\proj} project will advance the ER's expertise in theoretical domains, complementing his
-    practical software engineering skills obtained during his PhD through substantial implementation
-    work of ITP technology. During his tenure at the host institution, the ER will expand his
-    scientific horizon by immersing himself in the English school of proof theory, the historical
-    centre for the development of the deep inference methodology. Here, he will gain further
-    knowledge of advanced state-of-the-art topics such as cyclic proofs, intuitionistic modal logics
-    and homotopy type theory. At least weekly meetings with his supervisor will serve as forums to
-    assess project progress, explore scientific inquiries, and exchange innovative ideas.
-    
-    \item[\TO{2}. Developing communication and public outreach skills]
-
-    \item[\TO{3}. Enhance management and leadership skills]
-
-    \item[\TO{4}. Enhance supervision and teaching skills]
-
-\end{description}   The ER will actively engage
-in mentoring the supervisor's students, providing individual guidance on their research projects,
-and offering courses in specialised subjects such as structural proof theory and interactive theorem
-proving. He will also take on responsibilities such as crafting research internship proposals and
-overseeing interns during 2-3 month periods of study. The ER will actively participate in the ToC's
-weekly seminar series, featuring speakers from renowned global research institutions. Moreover, the
-ER will be an active participant in the national monthly “Chocola” meetings held in Lyon. As a
-fellowship recipient, the ER will also acquire grant management skills and enhance his grant
-proposal writing abilities, supported by the Inria cell of the European Research Network.
-
 \subsection{Quality and appropriateness of the researcher's professional
     experience, competences and skills}
 \label{ssc:excellence:researcher}
 
-Discuss the quality and appropriateness of the researcher’s existing professional
-experience in relation to the proposed research project.
+The ER is an internationally recognised expert in proof theory and interactive theorem proving. His
+PhD thesis, defended in May 2024, revolves around the design and implementation of novel proof
+systems that enable the construction of formal proofs through direct manipulation in a GUI. In
+particular, Chapters 9 and 10 provide a deep 100 pages analysis of the proof theory of EGs both in
+propositional/first-order and intuitionistic/classical logic, and describe a prototype of GUI for
+ITPs based on this theory called Flower Prover, which is publicly accessible and usable
+online\footcite{flower-prover}. Thus the {\proj} project constitutes a direct continuation and
+substantial extension of the ER's doctoral research and benefits from his personal interdisciplinary
+background in computer science, mathematics and philosophy. Indeed, although the ER has been mainly
+trained in computer science during his studies, he also attended the 1\textsuperscript{st} year of
+the Université Paris 1's master in Logic and Philosophy of Science (LOPHISC). After finishing his
+PhD, the ER has secured a 1-year postdoctoral position at the Grothendieck Institute, working with
+Olivia Caramello and Fields medalist Laurent Lafforgue on the formalization of topos theory in the
+Lean proof assistant, thus broadening significantly his mathematical knowledge. Topos theory also
+has well-known applications to the semantics of higher-order and dependent type theories which have
+been investigated by researchers of ToC like Steve Vickers, making this acquired knowledge relevant
+to \WP{4} of {\proj}.
+
+The ER has proven his potential to carry out interesting and impactful research witnessed by two
+publications at top-tier conferences (CPP, FSCD), as well as his strong independence by being the
+sole author of his second article. He is an experienced speaker, having delivered ? conference
+talks, ? workshop talks, and ? invited seminar talks to date. Moreover, he has been invited by
+Ahti-Veikko Pietarinen --- one of the most prolific Peirce scholars in the world with an h-index of
+35 --- to contribute a chapter to the forthcoming book \textit{Peirce’s Philosophy of
+Notation}\footnote{\url{https://www.amazon.fr/Peirces-Philosophy-of-Notation/dp/3110649500}},
+demonstrating recognition of his interdisciplinary and international expertise on EGs.
+The ER has been involved in teaching during every year of his PhD: he taught various courses on
+programming languages at undergraduate and graduate levels, both at Université Paris 7 and École
+Polytechnique. This involved teaching classes to groups of more than 50 students and performing
+various other duties, such as exam grading, project review and practical sessions mentoring.
+
+% The ER has demonstrated his ability to secure funding by obtaining his PhD scholarship from École
+% Polytechnique. Drawing from the extensive experience of the supervisor and fellow members of the ToC
+% group in securing grants, the ER will be well-equipped for future endeavours, such as pursuing an
+% ERC starting grant.
 
 \section{Impact \mscatag{IMP-ACT-IA}}
 \label{sc:impact}
@@ -668,99 +689,115 @@ experience in relation to the proposed research project.
     development}
 \label{ssc:impact:career}
 
-At a minimum, address the following aspects:
+The MSCA fellowship is a crucial step towards the ER's long-term goal of securing a professorship in
+Europe. It will directly support his medium-term ambition of obtaining an ERC starting grant by
+providing the ideal environment to mature his research programme on scroll nets from a promising
+initial discovery into a cornerstone of next-generation ITPs. The project will significantly enhance
+his academic track record through high-impact publications and presentations at top-tier venues,
+demonstrating his capacity for independent and groundbreaking research.
 
-\begin{itemize}
-    \item Specific measures to enhance career perspectives and employability of
-    the researcher inside and/or outside academia.
-    \item \emph{Expected} contribution of proposed skills development to the
-    future career of the researcher.
-\end{itemize}
+% This fellowship will serve as a catalyst for the ER's scientific growth. By joining the ToC group at
+% UoB, a world-leading centre for proof theory, he will deepen his expertise in areas directly
+% relevant to {\proj}, such as cyclic proofs, modal logics, and homotopy type theory (\TO{1}). This
+% new knowledge will complement his unique background in EGs and interactive theorem proving, creating
+% a powerful synthesis. The training in management, leadership, and grant writing (\TO{2}), combined
+% with the experience of managing the project's work packages and budget, will equip him with the
+% necessary skills for leading a research group. Furthermore, his teaching and supervision activities
+% (\TO{3}) will prepare him for future mentorship roles as a professor.
+
+The fellowship at UoB offers unparalleled networking opportunities. The ER will be integrated into
+the vibrant ToC group, fostering daily interactions and collaborations with his supervisor and its
+members, whose expertise is vital for the success of all five work packages (see
+Sec.~\ref{ssc:excellence:supervision}). More generally, the UK is known to be one of the epicenters
+for research in proof theory and programming language theory, with leading researchers in these two
+fields at top universities; this includes the \emph{Mathematical foundations of computation} group
+at University of Bath, the \emph{Programming Principles, Logic, and Verification} group at
+University College London, and the \emph{Programming, Logic, and Semantics} group at University of
+Cambridge. This strategic positioning will expand the ER collaborative network, solidifying his
+standing in the international community and paving the way for future joint projects. In particular,
+a collaboration on \WP{5} is expected with Dr. Heijltjes from University of Bath (see
+Sec.~\ref{ssc:excellence:methodology}). The outcomes of {\proj}, disseminated through open-access
+publications, pre-prints, and a dedicated workshop (Sec.~\ref{ssc:impact:outcomes}), will cement the
+ER's reputation as a leader in the field, boosting his employability and career prospects.
 
 \subsection{Suitability and quality of the measures to maximise expected
     outcomes and impacts, as set out in the dissemination and exploitation plan,
     including communication activities \mscatag{COM-DIS-VIS-CDV}}
 \label{ssc:impact:outcomes}
 
-At a minimum, address the following aspects:
+\paragraph{Scientific events}
+The results of the {\proj} project are planned to be published in the journals Logical Methods in
+Computer Science (LMCS) and Theoretical Computer Science (TCS), and at the conferences Logic in
+Computer Science (LICS), Computer Science Logic (CSL), Formal Structures for Computation and
+Deduction (FSCD), Frontiers of Combining Systems (FroCoS), TABLEAUX and DIAGRAMS. All of these are
+international top-tier venues focusing on logical topics in computer science, to the exception of
+DIAGRAMS which is interdisciplinary and open to all fields that study diagrammatic notations,
+including mathematics, cognitive science, psychology, philosophy and linguistics. DIAGRAMS 2026 will
+be hosted by Pawel Sobocinski's group in Tallinn, internationally renowned for their expertise in
+string diagrams, with Francesco Bellucci --- co-editor with Pietarinen of the Peirceana book series
+(see Sec.~\ref{ssc:excellence:researcher}) --- as program chair. FroCoS is also specifically
+interested in frameworks that can combine multiple logics and thus particularly relevant to {\proj}.
+Additionally, the ER will report about the status of the {\proj} project frequently at international
+workshops like LFMTP or TYPES. He will propose to co-organize with colleagues Dr. Haydon (expert in
+EGs) and Dr. Di Giorgio (expert in string diagrams) a new ``Graphical Logic Workshop'' (GLW)
+affiliated with the Federated Logic Conference (FLoC), filling the absence of a federated community
+of researchers on {\proj} topics. All these measures will enable a wide range of possible future
+research to be conducted by contributors, external collaborators, and independent research groups.
+Regarding the management of intellectual property, as explained in
+Sec.~\ref{ssc:excellence:methodology}, all results of {\proj} will be publicly available online to
+maximize outreach.
 
-\begin{itemize}
-    \item \emph{Plan for the dissemination and exploitation activities, including
-    communication activities}\footnotemark{}: Describe the planned measures to
-    maximize the impact of your project by providing a first version of your ‘plan
-    for the dissemination and exploitation including communication activities’.
-    Describe the dissemination, exploitation measures that are planned, and the target
-    group(s) addressed (e.g. scientific community, end users, financial actors,
-    public at large). Regarding communication measures and public engagement
-    strategy, the aim is to inform and reach out to society and show the activities
-    performed, and the use and the benefits the project will have for citizens.
-    Activities must be strategically planned, with clear objectives, start at the
-    outset and continue through the lifetime of the project. The description of
-    the communication activities needs to state the main messages as well as the
-    tools and channels that will be used to reach out to each of the chosen target
-    groups.
+\paragraph{Public communication}
+As the ultimate goal of {\proj} is to propose a new notation for logic and programming that is more accessible to non-experts, the ER will undertake multiple initiatives to engage audiences outside of academia. A personal blog dedicated to scroll nets will be created to explain the basic principles of the formalism, assuming little to no background in logic and programming. This will serve as a direct test for the accessibility and intuitiveness of the notation, and may include interactive animations in the web browser inspired by the popular online learning platform Brilliant.org, whose slogan ``Learn by doing'' fits nicely with the ER's Proof-by-Action paradigm. To reach a more established audience, the ER will also contribute to Prof. Anupam Das's existing proof theory blog\footnote{\url{https://prooftheory.blog/about-the-proof-theory-blog/}}. Furthermore, a YouTube channel may be launched to explore the concepts of visual logic and programming, leveraging the video format to provide dynamic and engaging explanations. Finally, the ER will actively participate in science popularization events such as \emph{The Big Bang Fair}\footnote{\url{https://www.thebigbang.org.uk/}} in Birmingham and \emph{Computer Science in Action} in London\footnote{\url{https://educationinaction.org.uk/study-day/computer-science-in-action-27-11-2024/}}, presenting the project's ideas to students, teachers, and the general public to inspire the next generation of computer scientists.
 
-    \footnotetext{In case your proposal is selected for funding, a more detailed
-    Dissemination and Exploitation plan will need to be provided as a mandatory
-    project deliverable during project implementation.}
 
-    \item \emph{Strategy for the management of intellectual property, foreseen
-    protection measures}: if relevant, discuss the strategy for the management
-    of intellectual property, foreseen protection measures, such as patents,
-    design rights, copyright, trade secrets, etc., and how these would be used
-    to support exploitation.
 
-    \item All measures should be proportionate to the scale of the project, and
-    should contain concrete actions to be implemented both during and after the
-    end of the project.
-\end{itemize}
+% At a minimum, address the following aspects:
+
+% \begin{itemize}
+%     \item \emph{Plan for the dissemination and exploitation activities, including
+%     communication activities}\footnotemark{}: Describe the planned measures to
+%     maximize the impact of your project by providing a first version of your ‘plan
+%     for the dissemination and exploitation including communication activities’.
+%     Describe the dissemination, exploitation measures that are planned, and the target
+%     group(s) addressed (e.g. scientific community, end users, financial actors,
+%     public at large). Regarding communication measures and public engagement
+%     strategy, the aim is to inform and reach out to society and show the activities
+%     performed, and the use and the benefits the project will have for citizens.
+%     Activities must be strategically planned, with clear objectives, start at the
+%     outset and continue through the lifetime of the project. The description of
+%     the communication activities needs to state the main messages as well as the
+%     tools and channels that will be used to reach out to each of the chosen target
+%     groups.
+
+%     \footnotetext{In case your proposal is selected for funding, a more detailed
+%     Dissemination and Exploitation plan will need to be provided as a mandatory
+%     project deliverable during project implementation.}
+
+%     \item \emph{Strategy for the management of intellectual property, foreseen
+%     protection measures}: if relevant, discuss the strategy for the management
+%     of intellectual property, foreseen protection measures, such as patents,
+%     design rights, copyright, trade secrets, etc., and how these would be used
+%     to support exploitation.
+
+%     \item All measures should be proportionate to the scale of the project, and
+%     should contain concrete actions to be implemented both during and after the
+%     end of the project.
+% \end{itemize}
 
 \subsection{The magnitude and importance of the project’s contribution to the
     expected scientific, societal and economic impacts}
 \label{ssc:impact:future}
 
-\begin{itemize}
-    \item Provide a narrative explaining how the project’s results are expected
-    to make a difference in terms of impact, beyond the immediate scope and
-    duration of the project. The narrative should include the components below,
-    tailored to your project.
+The core vision of {\proj} is to make formal reasoning more accessible. If successful, its impact will extend far beyond the project's immediate scope, transforming domains where rigorous verification is critical but currently hindered by the steep learning curve of ITPs.
 
-    \item Be specific, referring to the effects of your project, and not R\&I
-    in general in this field. State the target groups that would benefit.
+\begin{description}
+    \item[Scientific/Societal Impact in Mathematics Education] {\proj} will provide a ``no-code'' platform for students to interactively explore mathematical concepts. The diagrammatic nature of scroll nets offers a more intuitive way to grasp abstract proofs than traditional symbolic logic, fostering deeper understanding and engagement\footcite{minhResearchReportProof2024}. This could democratize access to advanced mathematics and computer science, benefiting students and educators from secondary to higher education by providing a collaborative and visual learning medium.
 
-    \item The impacts of your project may be:
+    \item[Economic/Technological Impact in Formal Verification] By lowering the barrier to entry, {\proj} will enable wider adoption of formal methods in industry. The PbA paradigm will allow domain experts (e.g., engineers, systems architects) to directly participate in the verification process without extensive training in ITPs. This will reduce costs and development time while increasing the reliability of safety-critical systems in sectors like aerospace, automotive, and healthcare, leading to significant economic and safety benefits.
 
-    \begin{itemize}
-        \item \emph{Scientific}: e.g. contributing to specific scientific advances,
-        across and within disciplines, creating new knowledge, reinforcing
-        scientific equipment and instruments, computing systems (i.e. research
-        infrastructures);
-
-        \item \emph{Economic/technological}: e.g. bringing new
-        products, services, business processes to the market, increasing efficiency,
-        decreasing costs, increasing profits, contributing to standards’ setting,
-        etc.
-
-        \item \emph{Societal}: e.g. decreasing CO2 emissions,
-        decreasing avoidable mortality, improving policies and decision-making,
-        raising consumer awareness.
-    \end{itemize}
-
-    \item Only include such outcomes and impacts where your project would make
-    a significant and direct contribution. Avoid describing very tenuous links
-    to wider impacts.
-
-    \item Give an indication of the magnitude and importance of the project's
-    contribution to the expected outcomes and impacts, should the project be
-    successful. Provide credible quantified estimates where possible and meaningful.
-
-    ``Magnitude'' refers to how widespread the outcomes and impacts are likely
-    to be. For example, in terms of the size of the target group, or the
-    proportion of that group, that should benefit over time.
-
-    ``Importance'' refers to the value of those benefits. For example, number of
-    additional healthy life years; efficiency savings in energy supply.
-\end{itemize}
+    \item[Scientific/Technological Impact in AI Safety] {\proj} will contribute to the development of more reliable neurosymbolic AI systems. By providing a transparent and verifiable logical reasoning component, scroll nets can complement the probabilistic nature of LLMs, mitigating the risk of ``hallucinations'' and ensuring that AI-driven scientific discovery is grounded in rigorous, auditable proof. This enhances the trustworthiness of AI systems in high-stakes research and decision-making.
+\end{description}
 
 \mscatagend{COM-DIS-VIS-CDV} \mscatagend{IMP-ACT-IA}
 
@@ -772,61 +809,86 @@ At a minimum, address the following aspects:
     appropriateness of the effort assigned to work packages}
 \label{ssc:implementation:workplan}
 
-At a minimum, address the following aspects:
 
-\begin{itemize}
-    \item Brief presentation of the overall structure of the work plan,
-    including deliverables and milestones.
+The project is structured into four technical work packages (\WP{1}-\WP{4}) to be completed over the 24-month fellowship. The work plan is designed to front-load the foundational theoretical work in the first year, allowing the second year to focus on extensions, applications, and dissemination.
 
-    \item Timing of the different work packages and their components;
+\begin{description}
+    \item[Deliverables] Each technical work package will culminate in a major scientific publication (\DE{1}-\DE{4}). An additional deliverable (\DE{5}) will be the creation of the project website/blog for public communication.
+    \item[Milestones] Key milestones include the completion of the foundational theory (\MI{1}), the successful extension to intermediate and fixpoint logics (\MI{2}), and the development of the theory for dependent types (\MI{3}).
+\end{description}
 
-    \item Mechanisms in place to assess and mitigate risks (of research and/or
-    administrative nature).
-    
-    \begin{table}[]
-    \begin{tabular}{|l|c|c|}
-    \hline
-    \textbf{Risk}                                                                                    & \textbf{Mitigation}                                                                                                                   & \textbf{Severity} \\ \hline
-    The FMC or RMC's expressivity makes it difficult to find an efficient simulation in scroll nets. & Close collaboration with the original inventor W. Heijltjes, or fallback to smaller results on less expressive models of computation. & high              \\ \hline
-                                                                                                     &                                                                                                                                       &                   \\ \hline
-    \end{tabular}
-    \end{table}
-\end{itemize}
+\paragraph{Risks and Mitigation}
+Potential risks to the project have been identified and mitigation strategies are in place to ensure its successful completion. Regular meetings with the supervisor will allow for continuous risk assessment.
 
-A Gantt chart must be included and should indicate the proposed Work Packages
-(WP), major deliverables, milestones, secondments, placements, if applicable.
-This Gantt chart counts towards the 10-page limit.
 
-The schedule in the Gantt chart should indicate the number of months elapsed
-from the start of the action (Month 1, Month 2, etc.), but no actual dates.
+\begin{ganttchart}[
+    y unit title=0.5cm,
+    y unit chart=0.5cm,
+    vgrid, hgrid,
+    title label font=\bfseries,
+    bar/.style={fill=blue!50},
+    milestone/.style={fill=red!70},
+    group/.style={fill=green!40}
+  ]{1}{24}
+  \gantttitle{Project Timeline}{24} \\
+  \ganttgroup[group/.style={fill=green!30}]{Research Activities}{1}{24} \\
+  \ganttbar[bar/.style={fill=blue!40}]{\WP{1}: Core Theory}{1}{7} \ganttmilestone[milestone/.style={fill=red!70}]{\MI{1}}{7} \\
+  \ganttbar[bar/.style={fill=blue!50}]{\WP{2}: Intuitionistic/Classical Logic}{6}{12} \\
+  \ganttbar[bar/.style={fill=blue!60}]{\WP{3}: Fixpoint Logic \& Recursion}{11}{18} \ganttmilestone[milestone/.style={fill=red!80}]{\MI{2}}{18} \\
+  \ganttbar[bar/.style={fill=blue!70}]{\WP{4}: Dependent/Modal Logic}{16}{24} \ganttmilestone[milestone/.style={fill=red!90}]{\MI{3}}{24} \\
+  \ganttgroup[group/.style={fill=orange!30}]{Dissemination \& Communication}{1}{24} \\
+  \ganttbar{\DE{1}: Publication \WP{1}}{7}{8} \\
+  \ganttbar{\DE{2}: Publication \WP{2}}{12}{13} \\
+  \ganttbar{\DE{3}: Publication \WP{3}}{18}{19} \\
+  \ganttbar{\DE{4}: Publication \WP{4}}{24}{24} \\
+  \ganttbar{\DE{5}: Website/Blog}{1}{3} \\
+  \ganttbar{Workshop Org.}{15}{23} \ganttmilestone{\MI{4}}{23} \\
+\end{ganttchart}
+
+\begin{table}[h!]
+\centering
+\fontsize{11pt}{10pt}\selectfont
+\caption{Risk Assessment and Mitigation Plan}
+\begin{tabular}{p{0.4\textwidth} p{0.4\textwidth} c}
+\toprule
+\textbf{Risk} & \textbf{Mitigation Strategy} & \textbf{Severity} \\
+\midrule
+\textbf{R1:} Foundational theory in \WP{1} (normalization/sequentialization) proves more complex than anticipated, delaying subsequent $\mathsf{WP}$s. & Allocate an extra month for \WP{1}. If major issues arise, consult with external experts in graphical proof theory, such as Dr. Heijltjes. & Medium \\
+\addlinespace
+\textbf{R2:} The proposed extensions in \WP{2}-\WP{3} do not yield sound and complete systems or fail to extend the core meta-theorems. & The expertise of the supervisor (cyclic proofs) and collaborators (modal/bi-intuitionistic logic) will be leveraged. If a specific extension fails, focus will shift to the more promising ones. & Medium \\
+\addlinespace
+\textbf{R3:} Failure to extend the theory to dependent types in \WP{4}. & Intensify collaboration with Prof. Escardo, an expert in dependent types. If significant roadblocks appear, focus will shift to the less speculative modal logic aspects of \WP{4}. & Medium \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \subsection{Quality and capacity of the host institutions and participating
 organisations, including hosting arrangements}
 \label{ssc:implementation:host}
 
-At a minimum, address the following aspects:
+% At a minimum, address the following aspects:
 
-\begin{itemize}
-    \item Hosting arrangements, including integration in the team/institution(s)
-    and support services available to the researcher.
+% \begin{itemize}
+%     \item Hosting arrangements, including integration in the team/institution(s)
+%     and support services available to the researcher.
 
-    \item Quality and capacity of the participating organisations, including
-    infrastructure, logistics and facilities. Additional information should be
-    outlined in Part B-2 Section 5 (``Capacity of the Participating Organisations'').
-\end{itemize}
+%     \item Quality and capacity of the participating organisations, including
+%     infrastructure, logistics and facilities. Additional information should be
+%     outlined in Part B-2 Section 5 (``Capacity of the Participating Organisations'').
+% \end{itemize}
 
-Note that for GF, both the quality and capacity of the outgoing Third Country
-host and the return host should be outlined.
+% Note that for GF, both the quality and capacity of the outgoing Third Country
+% host and the return host should be outlined.
 
-\subsection*{Associated partners linked to a beneficiary {\protect\footnotemark{}}}
-\label{ssc:implementation:partners}
+% \subsection*{Associated partners linked to a beneficiary {\protect\footnotemark{}}}
+% \label{ssc:implementation:partners}
 
-If applicable, outline here the involvement of any 'associated partners linked
-to a beneficiary' (in particular, the name of the entity, the type of link with
-the beneficiary and the tasks to be carried out).
+% If applicable, outline here the involvement of any 'associated partners linked
+% to a beneficiary' (in particular, the name of the entity, the type of link with
+% the beneficiary and the tasks to be carried out).
 
-\footnotetext{See the definitions section of the MSCA Work Programme for
-further information.}
+% \footnotetext{See the definitions section of the MSCA Work Programme for
+% further information.}
 
 \mscatagend{CON-SOR-CS} \mscatagend{PRJ-MGT-PM} \mscatagend{QUA-LIT-QL} \mscatagend{WRK-PLA-WP}
 \end{document}

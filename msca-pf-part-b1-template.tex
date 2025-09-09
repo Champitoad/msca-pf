@@ -1,4 +1,4 @@
-\documentclass[12pt,draftproposal]{msca-pf}
+\documentclass[11pt]{msca-pf}
 % {{{ packages
 
 \usepackage[left=15mm,right=15mm,bottom=20mm,top=20mm]{geometry}
@@ -151,7 +151,7 @@ proofs in EGs by rewriting diagrams in contexts of arbitrary depth
 (Fig.~\ref{fig:modus-ponens-dynamic}), and scroll nets record these rewrites \emph{statically} as
 arrows in a directed graph (Fig.~\ref{fig:modus-ponens-static}). This yields a representation of
 proofs that subsumes the \emph{simply-typed $\lambda$-calculus} (STLC), the programming language underlying
-all modern ITPs.
+modern ITPs.
 
 Motivated by this discovery, the {\proj} project will pursue the following ambitious objective:
 
@@ -161,6 +161,21 @@ Motivated by this discovery, the {\proj} project will pursue the following ambit
     that support \textbf{interactive refinement} of formal specifications, proofs and programs through
     	\textbf{diagrammatic manipulations} in a GUI.
 }}
+
+
+Given the early stage of the theory of scroll nets and the expertise of the Theory of Computation
+group at Birmingham hosting the ER, the {\proj} project will progress towards this vision by
+focusing on the following Key Objectives:
+
+\setlength{\fboxsep}{5pt}
+\fullwidthbox{
+    \begin{description}
+        \item[\KO{1}.] extend the theory of scroll nets to account for \textbf{richer logics},
+        beyond minimal implicative logic;
+        \item[\KO{2}.] find natural and efficient \textbf{translations} of state-of-the-art (SOTA)
+        proof systems and programming languages into scroll nets.
+    \end{description}
+}
 
 \begin{figure}
   \captionsetup[subfigure]{justification=centering}
@@ -190,20 +205,6 @@ Motivated by this discovery, the {\proj} project will pursue the following ambit
   (resp. inner white \emph{inloop}) contains the antecedant $a$ (resp. consequent $b$).}
   \label{fig:modus-ponens}
 \end{figure}
-
-Given the early stage of the theory of scroll nets and the expertise of the Theory of Computation
-group at Birmingham hosting the ER, the {\proj} project will progress towards this vision by
-focusing on the following Key Objectives:
-
-\setlength{\fboxsep}{5pt}
-\fullwidthbox{
-    \begin{description}
-        \item[\KO{1}.] extend the theory of scroll nets to account for \textbf{richer logics},
-        beyond minimal implicative logic;
-        \item[\KO{2}.] find natural and efficient \textbf{translations} of state-of-the-art (SOTA)
-        proof systems and programming languages into scroll nets.
-    \end{description}
-}
 
 \subsubsection{State-of-the-art and contributions}
 
@@ -350,7 +351,7 @@ The core theory will be developed in \WP{1} and then extended to richer logics i
 programming systems like recursion and dependent types, contributing to \KO{2}.
 
 
-    \WP{1}.~~ {\proj} will start in the restricted and well-understood setting of minimal
+    \WP{1}.~ {\proj} will start in the restricted and well-understood setting of minimal
     implicative logic, with the aim to prove formally two key meta-theoretic properties of scroll
     nets:
     \begin{itemize}
@@ -376,7 +377,7 @@ programming systems like recursion and dependent types, contributing to \KO{2}.
         known to have any equivalent in the proof-theoretic landscape.
     \end{itemize}
     
-    \WP{2}.~~ Oostra already identified how to capture intuitionistic disjunction in EGs, by considering
+    \WP{2}.~ Oostra already identified how to capture intuitionistic disjunction in EGs, by considering
     a \emph{horizontal} generalization of the scroll where one can have an arbitrary number $h$ of
     inloops attached to the same outloop\footcite{oostra_graficos_2010}. The ER has performed
     preliminary experiments on a further \emph{vertical} generalization of the scroll where inloops
@@ -419,7 +420,7 @@ programming systems like recursion and dependent types, contributing to \KO{2}.
       \label{fig:extensions}
     \end{figure}
 
-    \WP{3}~~ Once disjunction is properly handled by the results of \WP{2}, adding \emph{least} and
+    \WP{3}.~ Once disjunction is properly handled by the results of \WP{2}, adding \emph{least} and
     \emph{greatest fixpoints} of propositions is a natural step to take, that would bring the
     computational power of SOTA functional programming languages. Indeed, the combination of these
     two constructs corresponds to \emph{(co-)recursive algebraic data types} through the CHC, which
@@ -431,7 +432,7 @@ programming systems like recursion and dependent types, contributing to \KO{2}.
     well as its connections to the emerging technology of \emph{cyclic proofs}, addressing both
     \CH{2} and \KO{2}. 
 
-    \WP{4}.~~ Work packages \WP{1} to \WP{3} deal with various flavours of propositional logic,
+    \WP{4}.~ Work packages \WP{1} to \WP{3} deal with various flavours of propositional logic,
     corresponding to Peirce's system $\mathsf{Alpha}$ of EGs. However, Peirce also explored
     extensions of EGs with new diagrammatic constructs that go beyond propositional logic: system
     $\mathsf{Beta}$ used so-called \emph{lines of identity} (LoI) to capture both quantifiers and
@@ -668,13 +669,14 @@ publications at top-tier conferences (CPP, FSCD), as well as his strong independ
 sole author of his second article. He is an experienced speaker, having delivered ? conference
 talks, ? workshop talks, and ? invited seminar talks to date. Moreover, he has been invited by
 Ahti-Veikko Pietarinen --- one of the most prolific Peirce scholars in the world with an h-index of
-35 --- to contribute a chapter to the forthcoming book \textit{Peirce’s Philosophy of
-Notation}\footnote{\url{https://www.amazon.fr/Peirces-Philosophy-of-Notation/dp/3110649500}},
-demonstrating recognition of his interdisciplinary and international expertise on EGs.
-The ER has been involved in teaching during every year of his PhD: he taught various courses on
-programming languages at undergraduate and graduate levels, both at Université Paris 7 and École
-Polytechnique. This involved teaching classes to groups of more than 50 students and performing
-various other duties, such as exam grading, project review and practical sessions mentoring.
+35 --- to contribute a chapter to the forthcoming book \textit{Peirce’s Philosophy of Notation} in
+the Peirceana
+series\footnote{\url{https://www.amazon.fr/Peirces-Philosophy-of-Notation/dp/3110649500}},
+demonstrating recognition of his interdisciplinary and international expertise on EGs. The ER has
+been involved in teaching during every year of his PhD: he taught various courses on programming
+languages at undergraduate and graduate levels, both at Université Paris 7 and École Polytechnique.
+This involved teaching classes to groups of 50 students and performing duties such as exam grading,
+project review and practical sessions mentoring.
 
 % The ER has demonstrated his ability to secure funding by obtaining his PhD scholarship from École
 % Polytechnique. Drawing from the extensive experience of the supervisor and fellow members of the ToC
@@ -726,29 +728,43 @@ ER's reputation as a leader in the field, boosting his employability and career 
 \label{ssc:impact:outcomes}
 
 \paragraph{Scientific events}
-The results of the {\proj} project are planned to be published in the journals Logical Methods in
-Computer Science (LMCS) and Theoretical Computer Science (TCS), and at the conferences Logic in
-Computer Science (LICS), Computer Science Logic (CSL), Formal Structures for Computation and
-Deduction (FSCD), Frontiers of Combining Systems (FroCoS), TABLEAUX and DIAGRAMS. All of these are
-international top-tier venues focusing on logical topics in computer science, to the exception of
-DIAGRAMS which is interdisciplinary and open to all fields that study diagrammatic notations,
-including mathematics, cognitive science, psychology, philosophy and linguistics. DIAGRAMS 2026 will
-be hosted by Pawel Sobocinski's group in Tallinn, internationally renowned for their expertise in
-string diagrams, with Francesco Bellucci --- co-editor with Pietarinen of the Peirceana book series
-(see Sec.~\ref{ssc:excellence:researcher}) --- as program chair. FroCoS is also specifically
-interested in frameworks that can combine multiple logics and thus particularly relevant to {\proj}.
-Additionally, the ER will report about the status of the {\proj} project frequently at international
-workshops like LFMTP or TYPES. He will propose to co-organize with colleagues Dr. Haydon (expert in
-EGs) and Dr. Di Giorgio (expert in string diagrams) a new ``Graphical Logic Workshop'' (GLW)
-affiliated with the Federated Logic Conference (FLoC), filling the absence of a federated community
-of researchers on {\proj} topics. All these measures will enable a wide range of possible future
-research to be conducted by contributors, external collaborators, and independent research groups.
-Regarding the management of intellectual property, as explained in
-Sec.~\ref{ssc:excellence:methodology}, all results of {\proj} will be publicly available online to
-maximize outreach.
+The results of the {\proj} project are planned to be published in high-impact journals such as LMCS
+and TCS, and in the proceedings of conferences like LICS, CSL, FSCD, FroCoS, TABLEAUX and DIAGRAMS.
+All of these are international top-tier venues focusing on logical topics in computer science, to
+the exception of DIAGRAMS which is interdisciplinary and open to all fields that study diagrammatic
+notations, including mathematics, cognitive science, psychology, philosophy and linguistics.
+DIAGRAMS 2026 will be hosted by Pawel Sobocinski's group in Tallinn, internationally renowned for
+their expertise in string diagrams, with Francesco Bellucci --- co-editor with Pietarinen of the
+Peirceana book series (see Sec.~\ref{ssc:excellence:researcher}) --- as program chair. FroCoS is
+also specifically interested in frameworks that can combine multiple logics and thus particularly
+relevant to {\proj}. Additionally, the ER will report about the status of the {\proj} project
+frequently at international workshops like LFMTP or TYPES. He will propose to co-organize with
+colleagues Dr. Haydon (expert in EGs) and Dr. Di Giorgio (expert in string diagrams) a new
+``Graphical Logic Workshop'' (GLW) affiliated with the Federated Logic Conference (FLoC), filling
+the absence of a federated community of researchers on {\proj} topics. All these measures will
+enable a wide range of possible future research to be conducted by contributors, external
+collaborators, and independent research groups. Regarding the management of intellectual property,
+as explained in Sec.~\ref{ssc:excellence:methodology}, all results of {\proj} will be publicly
+available online to maximize outreach.
 
 \paragraph{Public communication}
-As the ultimate goal of {\proj} is to propose a new notation for logic and programming that is more accessible to non-experts, the ER will undertake multiple initiatives to engage audiences outside of academia. A personal blog dedicated to scroll nets will be created to explain the basic principles of the formalism, assuming little to no background in logic and programming. This will serve as a direct test for the accessibility and intuitiveness of the notation, and may include interactive animations in the web browser inspired by the popular online learning platform Brilliant.org, whose slogan ``Learn by doing'' fits nicely with the ER's Proof-by-Action paradigm. To reach a more established audience, the ER will also contribute to Prof. Anupam Das's existing proof theory blog\footnote{\url{https://prooftheory.blog/about-the-proof-theory-blog/}}. Furthermore, a YouTube channel may be launched to explore the concepts of visual logic and programming, leveraging the video format to provide dynamic and engaging explanations. Finally, the ER will actively participate in science popularization events such as \emph{The Big Bang Fair}\footnote{\url{https://www.thebigbang.org.uk/}} in Birmingham and \emph{Computer Science in Action} in London\footnote{\url{https://educationinaction.org.uk/study-day/computer-science-in-action-27-11-2024/}}, presenting the project's ideas to students, teachers, and the general public to inspire the next generation of computer scientists.
+As the ultimate goal of {\proj} is to propose a new notation for logic and programming that is more
+accessible to non-experts, the ER will undertake multiple initiatives to engage audiences outside of
+academia. A personal blog dedicated to scroll nets will be created to explain the basic principles
+of the formalism, assuming little to no background in logic and programming. This will serve as a
+direct test for the accessibility and intuitiveness of the notation, and may include interactive
+animations in the web browser inspired by the popular online learning platform Brilliant.org, whose
+slogan ``Learn by doing'' fits nicely with the ER's Proof-by-Action paradigm. To reach a more
+established audience, the ER will also contribute to Prof. Anupam Das's existing proof theory
+blog\footnote{\url{https://prooftheory.blog/about-the-proof-theory-blog/}}. Furthermore, a YouTube
+channel may be launched to explore the concepts of visual logic and programming, leveraging the
+video format to provide dynamic and engaging explanations. Finally, the ER will actively participate
+in science popularization events such as \emph{The Big Bang
+Fair}\footnote{\url{https://www.thebigbang.org.uk/}} in Birmingham and \emph{Computer Science in
+Action} in
+London\footnote{\url{https://educationinaction.org.uk/study-day/computer-science-in-action-27-11-2024/}},
+presenting the project's ideas to students, teachers, and the general public to inspire the next
+generation of computer scientists.
 
 
 
@@ -789,14 +805,32 @@ As the ultimate goal of {\proj} is to propose a new notation for logic and progr
     expected scientific, societal and economic impacts}
 \label{ssc:impact:future}
 
-The core vision of {\proj} is to make formal reasoning more accessible. If successful, its impact will extend far beyond the project's immediate scope, transforming domains where rigorous verification is critical but currently hindered by the steep learning curve of ITPs.
+The core vision of {\proj} is to make formal reasoning more accessible. If successful, its impact
+will extend far beyond the project's immediate scope, transforming domains where rigorous
+verification is critical but currently hindered by the steep learning curve of ITPs.
 
 \begin{description}
-    \item[Scientific/Societal Impact in Mathematics Education] {\proj} will provide a ``no-code'' platform for students to interactively explore mathematical concepts. The diagrammatic nature of scroll nets offers a more intuitive way to grasp abstract proofs than traditional symbolic logic, fostering deeper understanding and engagement\footcite{minhResearchReportProof2024}. This could democratize access to advanced mathematics and computer science, benefiting students and educators from secondary to higher education by providing a collaborative and visual learning medium.
+    \item[Scientific/Societal Impact in Mathematics Education] {\proj} will provide a ``no-code''
+    platform for students to interactively explore mathematical concepts. The diagrammatic nature of
+    scroll nets offers a more intuitive way to grasp abstract proofs than traditional symbolic
+    logic, fostering deeper understanding and engagement\footcite{minhResearchReportProof2024}. This
+    could democratize access to advanced mathematics and computer science, benefiting students and
+    educators from secondary to higher education by providing a collaborative and visual learning
+    medium.
 
-    \item[Economic/Technological Impact in Formal Verification] By lowering the barrier to entry, {\proj} will enable wider adoption of formal methods in industry. The PbA paradigm will allow domain experts (e.g., engineers, systems architects) to directly participate in the verification process without extensive training in ITPs. This will reduce costs and development time while increasing the reliability of safety-critical systems in sectors like aerospace, automotive, and healthcare, leading to significant economic and safety benefits.
+    \item[Economic/Technological Impact in Formal Verification] By lowering the barrier to entry,
+    {\proj} will enable wider adoption of formal methods in industry. The PbA paradigm will allow
+    domain experts (e.g., engineers, systems architects) to directly participate in the verification
+    process without extensive training in ITPs. This will reduce costs and development time while
+    increasing the reliability of safety-critical systems in sectors like aerospace, automotive, and
+    healthcare, leading to significant economic and safety benefits.
 
-    \item[Scientific/Technological Impact in AI Safety] {\proj} will contribute to the development of more reliable neurosymbolic AI systems. By providing a transparent and verifiable logical reasoning component, scroll nets can complement the probabilistic nature of LLMs, mitigating the risk of ``hallucinations'' and ensuring that AI-driven scientific discovery is grounded in rigorous, auditable proof. This enhances the trustworthiness of AI systems in high-stakes research and decision-making.
+    \item[Scientific/Technological Impact in AI Safety] {\proj} will contribute to the development
+    of more reliable neurosymbolic AI systems. By providing a transparent and verifiable logical
+    reasoning component, scroll nets can complement the probabilistic nature of LLMs, mitigating the
+    risk of ``hallucinations'' and ensuring that AI-driven scientific discovery is grounded in
+    rigorous, auditable proof. This enhances the trustworthiness of AI systems in high-stakes
+    research and decision-making.
 \end{description}
 
 \mscatagend{COM-DIS-VIS-CDV} \mscatagend{IMP-ACT-IA}
@@ -809,41 +843,72 @@ The core vision of {\proj} is to make formal reasoning more accessible. If succe
     appropriateness of the effort assigned to work packages}
 \label{ssc:implementation:workplan}
 
-
-The project is structured into four technical work packages (\WP{1}-\WP{4}) to be completed over the 24-month fellowship. The work plan is designed to front-load the foundational theoretical work in the first year, allowing the second year to focus on extensions, applications, and dissemination.
+The project is structured into four technical work packages (\WP{1}-\WP{4}) to be completed over the
+24-month fellowship. The work plan is designed to front-load the foundational theoretical work in
+the first year, allowing the second year to focus on extensions, applications, and dissemination.
 
 \begin{description}
-    \item[Deliverables] Each technical work package will culminate in a major scientific publication (\DE{1}-\DE{4}). An additional deliverable (\DE{5}) will be the creation of the project website/blog for public communication.
-    \item[Milestones] Key milestones include the completion of the foundational theory (\MI{1}), the successful extension to intermediate and fixpoint logics (\MI{2}), and the development of the theory for dependent types (\MI{3}).
+    \item[Deliverables] Each technical work package will culminate in a major scientific publication
+    (\DE{1}-\DE{4}). An additional deliverable (\DE{5}) will be the creation of the project
+    website/blog for public communication.
+    \item[Milestones] Key milestones include the completion of the foundational theory (\MI{1}), the
+    successful extension to intermediate and fixpoint logics (\MI{2}), and the development of the
+    theory for dependent types (\MI{3}).
 \end{description}
 
 \paragraph{Risks and Mitigation}
-Potential risks to the project have been identified and mitigation strategies are in place to ensure its successful completion. Regular meetings with the supervisor will allow for continuous risk assessment.
+Potential risks to the project have been identified and mitigation strategies are in place to ensure
+its successful completion. Regular meetings with the supervisor will allow for continuous risk
+assessment.
 
-
-\begin{ganttchart}[
-    y unit title=0.5cm,
-    y unit chart=0.5cm,
-    vgrid, hgrid,
-    title label font=\bfseries,
-    bar/.style={fill=blue!50},
-    milestone/.style={fill=red!70},
-    group/.style={fill=green!40}
-  ]{1}{24}
-  \gantttitle{Project Timeline}{24} \\
-  \ganttgroup[group/.style={fill=green!30}]{Research Activities}{1}{24} \\
-  \ganttbar[bar/.style={fill=blue!40}]{\WP{1}: Core Theory}{1}{7} \ganttmilestone[milestone/.style={fill=red!70}]{\MI{1}}{7} \\
-  \ganttbar[bar/.style={fill=blue!50}]{\WP{2}: Intuitionistic/Classical Logic}{6}{12} \\
-  \ganttbar[bar/.style={fill=blue!60}]{\WP{3}: Fixpoint Logic \& Recursion}{11}{18} \ganttmilestone[milestone/.style={fill=red!80}]{\MI{2}}{18} \\
-  \ganttbar[bar/.style={fill=blue!70}]{\WP{4}: Dependent/Modal Logic}{16}{24} \ganttmilestone[milestone/.style={fill=red!90}]{\MI{3}}{24} \\
-  \ganttgroup[group/.style={fill=orange!30}]{Dissemination \& Communication}{1}{24} \\
-  \ganttbar{\DE{1}: Publication \WP{1}}{7}{8} \\
-  \ganttbar{\DE{2}: Publication \WP{2}}{12}{13} \\
-  \ganttbar{\DE{3}: Publication \WP{3}}{18}{19} \\
-  \ganttbar{\DE{4}: Publication \WP{4}}{24}{24} \\
-  \ganttbar{\DE{5}: Website/Blog}{1}{3} \\
-  \ganttbar{Workshop Org.}{15}{23} \ganttmilestone{\MI{4}}{23} \\
-\end{ganttchart}
+% \begin{ganttchart}[
+%     y unit title=0.6cm,
+%     y unit chart=0.5cm,
+%     vgrid,
+%     hgrid,
+%     title label font=\bfseries,
+%     bar/.style={fill=green!40, rounded corners},
+%     bar label font=\small,
+%     milestone node/.style={
+%         shape=star,
+%         star points=5,
+%         star point ratio=0.5,
+%         fill=yellow!80!orange,
+%         draw=orange,
+%         thick,
+%         minimum size=0.3cm
+%     },
+%     milestone label node/.style={anchor=north},
+%     event/.style={
+%         shape=circle,
+%         fill=orange!80,
+%         draw=orange,
+%         thick,
+%         minimum size=0.25cm
+%     },
+%     link/.style={-latex, thick},
+%     link/.append style={->}
+%   ]{1}{24}
+%   \gantttitle{Project Timeline}{24} \\
+%   % Work Packages
+%   \ganttbar[bar/.style={fill=green!60}, name=wp1]{\WP{1}: Core Theory}{1}{7} \\
+%   \ganttbar[bar/.style={fill=green!80}, name=wp2]{\WP{2}: Intuitionistic/Classical Logic}{6}{12} \\
+%   \ganttbar[bar/.style={fill=red!60}, name=wp3]{\WP{3}: Fixpoint Logic \& Recursion}{11}{18} \\
+%   \ganttbar[bar/.style={fill=blue!60}, name=wp4]{\WP{4}: Predicate/Modal/HO Logic}{17}{24} \\
+%   % Milestones and Events
+%   \ganttgroup{Milestones \& Events}{1}{24} \\
+%   \ganttmilestone[name=m1]{\MI{1}}{7}
+%   \ganttmilestone[name=m2]{\MI{2}}{18}
+%   \ganttmilestone[name=m3]{\MI{3}}{24}
+%   \ganttmilestone[
+%     milestone node/.style={event},
+%     name=workshop,
+%   ]{Workshop (\MI{4})}{23} \\
+%   % Dependencies
+%   \ganttlink{wp1}{wp2}
+%   \ganttlink{wp2}{wp3}
+%   \ganttlink{wp3}{wp4}
+% \end{ganttchart}
 
 \begin{table}[h!]
 \centering
@@ -865,6 +930,38 @@ Potential risks to the project have been identified and mitigation strategies ar
 \subsection{Quality and capacity of the host institutions and participating
 organisations, including hosting arrangements}
 \label{ssc:implementation:host}
+
+\subsubsection{Quality and capacity of the host institution}
+
+The University of Birmingham (UoB) provides an ideal environment for {\proj}, being a leading
+research institution ranked 76th globally in the 2025 QS World University Rankings. Its Theory of
+Computation (ToC) group is a world-renowned centre for theoretical computer science, featuring
+prominent researchers like Paul Blain Levy (2025 Alonzo Church awardee), Martin Escardo, and the
+supervisor, Anupam Das. The university's robust infrastructure and demonstrated success in hosting
+MSCA Fellows (see Part B-2, Section 5) ensure comprehensive support for the project. UoB's
+administrative services, including a dedicated Horizon Europe support team, will manage all
+financial and contractual aspects, from the Grant Agreement to final reporting, allowing the ER to
+focus on research. The project will adhere to the European Code of Conduct for Research Integrity,
+with clear protocols for scientific conduct and ethics overseen by the supervisor.
+
+\subsubsection{Hosting arrangements}
+
+The ER will be fully integrated as an employee at UoB, benefiting from its established support
+system for MSCA Fellows. This includes access to university services, health and safety resources,
+and professional development opportunities through the People and Organisational Development (POD)
+and the Centre for Learning and Academic Development (CLAD). The ER's professional growth will be
+supported by Personal Development Reviews (PDRs), ensuring alignment with career objectives. UoB is
+committed to upholding the principles of the European Charter for Researchers and the HR Excellence
+in Research Award.
+
+Hosted within the ToC group, the ER will join a dynamic community of over 40 researchers, including
+faculty, postdoctoral fellows, and PhD students. This environment will foster intellectual exchange
+and collaboration. The group's weekly seminars and working groups will provide a platform for
+presenting progress on {\proj}, refining milestones, and preparing for dissemination activities.
+Regular meetings with the supervisor will ensure close guidance and mentorship. The School of
+Computer Science will provide all necessary resources, including dedicated office space,
+high-performance computing, and full access to digital libraries and scientific publications from
+all major publishers.
 
 % At a minimum, address the following aspects:
 

@@ -29,6 +29,19 @@
 \SetTracking{encoding={*}, shape=sc}{40}
 
 \RedeclareSectionCommand[
+    beforeskip=0.5ex,
+    afterskip=0.5ex
+]{section}
+\RedeclareSectionCommand[
+    beforeskip=0.3ex,
+    afterskip=0.3ex
+]{subsection}
+\RedeclareSectionCommand[
+    beforeskip=0.3ex,
+    afterskip=0.3ex
+]{subsubsection}
+
+\RedeclareSectionCommand[
   beforeskip=1pt plus 2pt minus 1pt,
   afterskip=-0.5em
 ]{paragraph}
@@ -74,11 +87,17 @@
 \newcommand{\TO}[1]{$\mathsf{TO#1}$}
 \newcommand{\xstep}[1]{\xrightarrow{#1}}
 
+\newcommand{\TaskCircle}[3]{
+    \begin{tikzpicture}
+        \fill[fill={rgb,255:red,#1; green,#2; blue,#3}] (0,0) circle (2.5px);
+    \end{tikzpicture}
+}
+
 % }}}
 
 % {{{ title
 
-\title{Part B-1}
+\title{ScrollNets: A Diagrammatic Foundation for Next-Generation Interactive Theorem Provers}
 \author{Pablo Donato}
 \date{\today}
 
@@ -355,14 +374,15 @@ programming systems like recursion and dependent types, contributing to \KO{2}.
     implicative logic, with the aim to prove formally two key meta-theoretic properties of scroll
     nets:
     \begin{itemize}
-        \item \textbf{Normalization} is a standard property of structural proof
-        systems that asserts the existence (and sometimes unicity) of a \emph{normal form} associated to
-        every proof, often exhibited constructively by a terminating (sometimes confluent) rewriting
-        system. The ER has already sketched in his preprint such a rewriting system, called \emph{detour
+        \item \textbf{Normalization} is a standard property of structural proof systems that asserts
+        the existence (and sometimes unicity) of a \emph{normal form} associated to every proof,
+        often exhibited constructively by a terminating (sometimes confluent) rewriting system. The
+        ER has already sketched in his preprint such a rewriting system, called \emph{detour
         elimination}. It will need a rigorous mathematical analysis to reach its definitive form and
-        obtain more insights on its computational properties. We expect that detour elimination will be
-        both terminating and confluent as well as highly parallelizable, in analogy with normalization
-        procedures for other graphical formalisms like proof nets and interaction nets.
+        obtain more insights on its computational properties. It is expected that detour elimination
+        will be both terminating and confluent as well as highly parallelizable, in analogy with
+        normalization procedures for other graphical formalisms like proof nets and interaction
+        nets.
 
         \item \textbf{Sequentialization} originates from proof nets: it is a fundamental theorem establishing the
         \emph{canonicity} of proof nets as a representation of proofs in (some fragments of) linear
@@ -445,7 +465,7 @@ programming systems like recursion and dependent types, contributing to \KO{2}.
     \square (p(x) \land q(x))$: the LoI connecting $p$, $q$ and the outloop represents the
     universally quantified variable $x$, while the dashed inloop represents necessity. \WP{4} will
     explore the precise inference rules governing these constructs, trying to accomodate the partial
-    descriptions in Peirce's writings to the modern CHC conception of {\proj}. We expect that LoI
+    descriptions in Peirce's writings to the modern CHC conception of {\proj}. It is expected that LoI
     can express \emph{dependent} types and \emph{identity} types, while broken cuts could capture
     either type-theoretic \emph{modalities} or type-theoretic \emph{universes} (or both), thus
     contributing greatly to \KO{1}. \WP{4} will also be essential to reach the necessary expressive
@@ -595,8 +615,8 @@ medium term, he aspires to obtain an unsupervised temporary position and funding
 grant. The acquisition of a prestigious MSCA grant would significantly enhance his prospects. The
 proposed training program is structured into three Training Objectives:
 \begin{description}
-    \item[\TO{1}. Gaining scientific knowledge]
-    During his tenure at the host institution, the ER will expand his scientific horizon by
+    \item[\TO{1}.] \textbf{Gaining scientific knowledge:}
+    during his tenure at the host institution, the ER will expand his scientific horizon by
     immersing himself in the English school of proof theory, the historical centre for the
     development of the deep inference methodology. Here, he will gain further knowledge of advanced
     SOTA topics such as cyclic proofs, intuitionistic modal logics and homotopy type
@@ -605,8 +625,8 @@ proposed training program is structured into three Training Objectives:
     participate in the ToC's weekly seminar series, featuring speakers from renowned global research
     institutions.
 
-    \item[\TO{2}. Enhance management, leadership and grant writing skills]
-    The ER will participate in several management and leadership skills courses offered by UoB's
+    \item[\TO{2}.] \textbf{Enhance management, leadership and grant writing skills:}
+    the ER will participate in several management and leadership skills courses offered by UoB's
     People and Organization Development (POD) division, including Research Team Leader, Effective
     Financial Management, and other programs on Health \& Safety in the Workplace, Ethics \&
     Governance in Research, Scientific Communication, Public Engagement \& Dissemination, and
@@ -614,8 +634,8 @@ proposed training program is structured into three Training Objectives:
     will enrich the ER's ability to adapt to changes and undertake a variety of activities to
     support his high-level interdisciplinary research capability.
 
-    \item[\TO{3}. Enhance supervision and teaching skills]
-    The ER will actively engage in mentoring the supervisor's students, providing individual
+    \item[\TO{3}.] \textbf{Enhance supervision and teaching skills:}
+    the ER will actively engage in mentoring the supervisor's students, providing individual
     guidance on their research projects, and offering courses in specialised subjects such as
     structural proof theory and interactive theorem proving. He will also take on responsibilities
     such as crafting research internship proposals and overseeing interns during 2-3 month periods
@@ -716,11 +736,10 @@ fields at top universities; this includes the \emph{Mathematical foundations of 
 at University of Bath, the \emph{Programming Principles, Logic, and Verification} group at
 University College London, and the \emph{Programming, Logic, and Semantics} group at University of
 Cambridge. This strategic positioning will expand the ER collaborative network, solidifying his
-standing in the international community and paving the way for future joint projects. In particular,
-a collaboration on \WP{5} is expected with Dr. Heijltjes from University of Bath (see
-Sec.~\ref{ssc:excellence:methodology}). The outcomes of {\proj}, disseminated through open-access
-publications, pre-prints, and a dedicated workshop (Sec.~\ref{ssc:impact:outcomes}), will cement the
-ER's reputation as a leader in the field, boosting his employability and career prospects.
+standing in the international community and paving the way for future joint projects. The outcomes
+of {\proj}, disseminated through open-access publications, pre-prints, and a dedicated workshop
+(Sec.~\ref{ssc:impact:outcomes}), will cement the ER's reputation as a leader in the field, boosting
+his employability and career prospects.
 
 \subsection{Suitability and quality of the measures to maximise expected
     outcomes and impacts, as set out in the dissemination and exploitation plan,
@@ -740,12 +759,10 @@ also specifically interested in frameworks that can combine multiple logics and 
 relevant to {\proj}. Additionally, the ER will report about the status of the {\proj} project
 frequently at international workshops like LFMTP or TYPES. He will propose to co-organize with
 colleagues Dr. Haydon (expert in EGs) and Dr. Di Giorgio (expert in string diagrams) a new
-``Graphical Logic Workshop'' (GLW) affiliated with the Federated Logic Conference (FLoC), filling
-the absence of a federated community of researchers on {\proj} topics. All these measures will
-enable a wide range of possible future research to be conducted by contributors, external
-collaborators, and independent research groups. Regarding the management of intellectual property,
-as explained in Sec.~\ref{ssc:excellence:methodology}, all results of {\proj} will be publicly
-available online to maximize outreach.
+``Graphical Logic Workshop'' (GLW) affiliated with a major conference, filling the absence of a
+federated community of researchers on {\proj} topics. All these measures will enable a wide range of
+possible future research to be conducted by contributors, external collaborators, and independent
+research groups.
 
 \paragraph{Public communication}
 As the ultimate goal of {\proj} is to propose a new notation for logic and programming that is more
@@ -810,7 +827,7 @@ will extend far beyond the project's immediate scope, transforming domains where
 verification is critical but currently hindered by the steep learning curve of ITPs.
 
 \begin{description}
-    \item[Scientific/Societal Impact in Mathematics Education] {\proj} will provide a ``no-code''
+    \item \textbf{Scientific/Societal Impact in Mathematics Education:}~ {\proj} will provide a ``no-code''
     platform for students to interactively explore mathematical concepts. The diagrammatic nature of
     scroll nets offers a more intuitive way to grasp abstract proofs than traditional symbolic
     logic, fostering deeper understanding and engagement\footcite{minhResearchReportProof2024}. This
@@ -818,14 +835,14 @@ verification is critical but currently hindered by the steep learning curve of I
     educators from secondary to higher education by providing a collaborative and visual learning
     medium.
 
-    \item[Economic/Technological Impact in Formal Verification] By lowering the barrier to entry,
+    \item \textbf{Economic/Technological Impact in Formal Verification:}~ By lowering the barrier to entry,
     {\proj} will enable wider adoption of formal methods in industry. The PbA paradigm will allow
     domain experts (e.g., engineers, systems architects) to directly participate in the verification
     process without extensive training in ITPs. This will reduce costs and development time while
     increasing the reliability of safety-critical systems in sectors like aerospace, automotive, and
     healthcare, leading to significant economic and safety benefits.
 
-    \item[Scientific/Technological Impact in AI Safety] {\proj} will contribute to the development
+    \item \textbf{Scientific/Technological Impact in AI Safety:}~ {\proj} will contribute to the development
     of more reliable neurosymbolic AI systems. By providing a transparent and verifiable logical
     reasoning component, scroll nets can complement the probabilistic nature of LLMs, mitigating the
     risk of ``hallucinations'' and ensuring that AI-driven scientific discovery is grounded in
@@ -843,72 +860,101 @@ verification is critical but currently hindered by the steep learning curve of I
     appropriateness of the effort assigned to work packages}
 \label{ssc:implementation:workplan}
 
-The project is structured into four technical work packages (\WP{1}-\WP{4}) to be completed over the
-24-month fellowship. The work plan is designed to front-load the foundational theoretical work in
-the first year, allowing the second year to focus on extensions, applications, and dissemination.
-
-\begin{description}
-    \item[Deliverables] Each technical work package will culminate in a major scientific publication
-    (\DE{1}-\DE{4}). An additional deliverable (\DE{5}) will be the creation of the project
-    website/blog for public communication.
-    \item[Milestones] Key milestones include the completion of the foundational theory (\MI{1}), the
-    successful extension to intermediate and fixpoint logics (\MI{2}), and the development of the
-    theory for dependent types (\MI{3}).
-\end{description}
+The project is structured into four technical \textbf{work packages} (\WP{1}-\WP{4}) to be completed
+over the 24-month fellowship. The work plan detailed in Fig.~\ref{fig:gantt} is designed to
+front-load the foundational theoretical work in the first year, allowing the second year to focus on
+extensions, applications, and dissemination. Each technical work package has been divided into
+several \textbf{deliverables}, corresponding to parts of the development of {\proj} that have
+potential for publication as individual conference articles. An additional deliverable (\DE{11})
+will be the creation of the project website/blog for public communication. \textbf{Key milestones}
+with regard to applications to ITPs are the completion of the foundational theory (\MI{1}), the
+successful extension to fixpoint logics (\MI{2}), and the development of the theory for dependent
+types (\MI{3}), corresponding respectively to \WP{1}, \WP{3}.a and \WP{4}.a.
 
 \paragraph{Risks and Mitigation}
 Potential risks to the project have been identified and mitigation strategies are in place to ensure
-its successful completion. Regular meetings with the supervisor will allow for continuous risk
-assessment.
+its successful completion (Table~\ref{tbl:risks}). Notably, the ER does not expect to realistically
+achieve the writing of 10 papers (deliverables \DE{1} to \DE{10}) in 2 years. Rather, this should be
+considered as a strategy to secure multiple independent avenues for research, where focus on
+deliverables marked as \emph{optional} can be released in case of roadblocks or failures. Several
+deliverables in the same work package might also be combined into a single long journal paper.
+Regular meetings with the supervisor will allow for continuous risk assessment.
 
-% \begin{ganttchart}[
-%     y unit title=0.6cm,
-%     y unit chart=0.5cm,
-%     vgrid,
-%     hgrid,
-%     title label font=\bfseries,
-%     bar/.style={fill=green!40, rounded corners},
-%     bar label font=\small,
-%     milestone node/.style={
-%         shape=star,
-%         star points=5,
-%         star point ratio=0.5,
-%         fill=yellow!80!orange,
-%         draw=orange,
-%         thick,
-%         minimum size=0.3cm
-%     },
-%     milestone label node/.style={anchor=north},
-%     event/.style={
-%         shape=circle,
-%         fill=orange!80,
-%         draw=orange,
-%         thick,
-%         minimum size=0.25cm
-%     },
-%     link/.style={-latex, thick},
-%     link/.append style={->}
-%   ]{1}{24}
-%   \gantttitle{Project Timeline}{24} \\
-%   % Work Packages
-%   \ganttbar[bar/.style={fill=green!60}, name=wp1]{\WP{1}: Core Theory}{1}{7} \\
-%   \ganttbar[bar/.style={fill=green!80}, name=wp2]{\WP{2}: Intuitionistic/Classical Logic}{6}{12} \\
-%   \ganttbar[bar/.style={fill=red!60}, name=wp3]{\WP{3}: Fixpoint Logic \& Recursion}{11}{18} \\
-%   \ganttbar[bar/.style={fill=blue!60}, name=wp4]{\WP{4}: Predicate/Modal/HO Logic}{17}{24} \\
-%   % Milestones and Events
-%   \ganttgroup{Milestones \& Events}{1}{24} \\
-%   \ganttmilestone[name=m1]{\MI{1}}{7}
-%   \ganttmilestone[name=m2]{\MI{2}}{18}
-%   \ganttmilestone[name=m3]{\MI{3}}{24}
-%   \ganttmilestone[
-%     milestone node/.style={event},
-%     name=workshop,
-%   ]{Workshop (\MI{4})}{23} \\
-%   % Dependencies
-%   \ganttlink{wp1}{wp2}
-%   \ganttlink{wp2}{wp3}
-%   \ganttlink{wp3}{wp4}
-% \end{ganttchart}
+\begin{figure}
+    \centering
+
+    \begin{ganttchart}[
+        hgrid,vgrid,
+        expand chart=\textwidth,
+        x unit=1cm,
+        y unit title=0.8cm,
+        y unit chart=0.35cm,
+        % milestone/.append style={shape=star, star point ratio=2.5, fill=yellow},
+        % milestone height=1.5,
+        milestone inline label node/.append style={left=5mm},
+    ]{1}{24}
+        % \gantttitle{Year 1}{12}
+        % \gantttitle{Year 2}{12} \\
+        \gantttitlelist{1,...,24}{1} \\
+
+        \ganttbar[name=wp1-a, bar/.append style={fill={rgb,255:red,255; green,170; blue,0}}]{\WP{1}.a}{1}{6} \\
+        \ganttbar[name=wp1-b, bar/.append style={fill={rgb,255:red,255; green,170; blue,0}}]{\WP{1}.b}{1}{6} \\
+
+        \ganttbar[name=wp2-a, bar/.append style={fill={rgb,255:red,226; green,120; blue,255}}]{\WP{2}.a}{7}{9} \\
+        \ganttbar[name=wp2-b, bar/.append style={fill={rgb,255:red,226; green,120; blue,255}, dashed}]{\WP{2}.b}{9}{12} \\
+        \ganttbar[name=wp2-c, bar/.append style={fill={rgb,255:red,226; green,120; blue,255}, dashed}]{\WP{2}.c}{10}{12} \\
+
+        \ganttbar[name=wp3-a, bar/.append style={fill={rgb,255:red,98; green,173; blue,255}}]{\WP{3}.a}{13}{16} \\
+        \ganttbar[name=wp3-b, bar/.append style={fill={rgb,255:red,98; green,173; blue,255}, dashed}]{\WP{3}.b}{15}{18} \\
+
+        \ganttbar[name=wp4-a, bar/.append style={fill={rgb,255:red,100; green,255; blue,100}}]{\WP{4}.a}{17}{20} \\
+        \ganttbar[name=wp4-b, bar/.append style={fill={rgb,255:red,100; green,255; blue,100}, dashed}]{\WP{4}.b}{19}{24} \\
+        \ganttbar[name=wp4-c, bar/.append style={fill={rgb,255:red,100; green,255; blue,100}, dashed}]{\WP{4}.c}{21}{24} \\
+
+        \ganttbar[name=website, bar/.append style={fill={rgb,255:red,200; green,200; blue,200}}]{Website}{1}{24} \\
+
+        \ganttnewline
+        \ganttmilestone[inline]{\MI{1}}{6}
+        \ganttmilestone[inline]{\MI{2}}{16}
+        \ganttmilestone[inline]{\MI{3}}{20}
+
+        \ganttlink{wp1-a}{wp2-a}
+        \ganttlink{wp1-a}{wp2-b}
+        \ganttlink{wp1-a}{wp2-c}
+        \ganttlink{wp1-a}{wp3-a}
+        \ganttlink{wp1-a}{wp3-b}
+        \ganttlink{wp1-a}{wp4-a}
+        \ganttlink{wp1-a}{wp4-b}
+        \ganttlink{wp1-a}{wp4-c}
+        \ganttlink{wp2-a}{wp2-b}
+        \ganttlink{wp2-a}{wp2-c}
+        \ganttlink{wp3-a}{wp3-b}
+        \ganttlink{wp4-a}{wp4-c}
+    \end{ganttchart}
+
+    \vspace{1em}
+        \renewcommand{\arraystretch}{0.8} % reduce the vertical space between rows in tables
+    \begin{tabular}{c p{0.65\textwidth} p{0.05\textwidth} c}
+        \fontsize{11pt}{10pt}\selectfont
+        \textit{Tasks} & \textit{Description} & \textit{Deliv.} & \textit{Month} \\
+        \midrule
+        \TaskCircle{255}{170}{0} \WP{1}.a & Sequentialization for minimal implicative logic & \DE{1} & 6 \\
+        \TaskCircle{255}{170}{0} \WP{1}.b & Normalization for minimal implicative logic & \DE{2} & 6 \\
+        \TaskCircle{226}{120}{255} \WP{2}.a & Extension to intuitionistic propositional logic with $(n,1)$-scrolls & \DE{3} & 9 \\
+        \TaskCircle{226}{120}{255} \WP{2}.b & Extension to bi-intuitionistic propositional logic with $(n,m)$-scrolls & \DE{4}$\mathsf{o}$ & 12 \\
+        \TaskCircle{226}{120}{255} \WP{2}.c & Equational theory of classical proofs through topology of rules & \DE{5}$\mathsf{o}$ & 15 \\
+        \TaskCircle{98}{173}{255} \WP{3}.a & Extension to least fixpoints of propositions & \DE{6} & 16 \\
+        \TaskCircle{98}{173}{255} \WP{3}.b & Extension to least+greatest fixpoints of propositions & \DE{7}$\mathsf{o}$ & 18 \\
+        \TaskCircle{100}{255}{100} \WP{4}.a & Extension to first-order predicate logic ($\mathsf{Beta}$) & \DE{8} & 20 \\
+        \TaskCircle{100}{255}{100} \WP{4}.b & Extension to the intuitionistic modal cube & \DE{9}$\mathsf{o}$ & 22 \\
+        \TaskCircle{100}{255}{100} \WP{4}.c & Extension to higher-order logic and dependent types ($\mathsf{Gamma}$) & \DE{10}$\mathsf{o}$ & 24 \\
+    \end{tabular}
+
+    \caption{\textbf{Above:} Gantt chart summarising the work plan of {\proj}. \textbf{Below:} tasks
+    and associated deliverables. Deliverables marked with the letter $\mathsf{o}$ (drawn with a
+    dashed contour) are considered optional.}
+    \label{fig:gantt}
+\end{figure}
 
 \begin{table}[h!]
 \centering
@@ -918,13 +964,14 @@ assessment.
 \toprule
 \textbf{Risk} & \textbf{Mitigation Strategy} & \textbf{Severity} \\
 \midrule
-\textbf{R1:} Foundational theory in \WP{1} (normalization/sequentialization) proves more complex than anticipated, delaying subsequent $\mathsf{WP}$s. & Allocate an extra month for \WP{1}. If major issues arise, consult with external experts in graphical proof theory, such as Dr. Heijltjes. & Medium \\
+\textbf{R1:} Foundational theory in \WP{1} (normalization/sequentialization) proves more complex than anticipated, delaying subsequent $\mathsf{WP}$s. & Allocate more time for \WP{1}. If major issues arise, consult with external experts in graphical proof theory, such as Dr. Heijltjes. & Medium \\
 \addlinespace
 \textbf{R2:} The proposed extensions in \WP{2}-\WP{3} do not yield sound and complete systems or fail to extend the core meta-theorems. & The expertise of the supervisor (cyclic proofs) and collaborators (modal/bi-intuitionistic logic) will be leveraged. If a specific extension fails, focus will shift to the more promising ones. & Medium \\
 \addlinespace
 \textbf{R3:} Failure to extend the theory to dependent types in \WP{4}. & Intensify collaboration with Prof. Escardo, an expert in dependent types. If significant roadblocks appear, focus will shift to the less speculative modal logic aspects of \WP{4}. & Medium \\
 \bottomrule
 \end{tabular}
+\label{tbl:risks}
 \end{table}
 
 \subsection{Quality and capacity of the host institutions and participating
